@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="header" class="header">
+        <div class="headerTop">
+            <div class="headerCenter">  <!--로고-->
+                <div class="headerLogo">
+                    <a href="/">
+                        <img src="/img/logoTitle.png" alt="homeLogo"/>
+                    </a>
+                </div>
+                <div class="searchBtn">
+                    <form th:action="@{/}" method="get">
+                        <input class="search-input" name="searchQuery" type="search" placeholder="검색어를 입력해주세요" aria-label="Search">
+                        <button class="btnSearch" type="submit"><span class="material-symbols-outlined">search</span></button></input>
+                    </form>
+                </div>
+                <div style="float:right;">
+                    <ul class="myInfo">
+                        <li class="top">
+                            <a href="/notices">공지사항</a>
+                        </li>
+                        <select name="adminPage" class="top" onchange="window.open(value, '_self');" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <option>관리자 페이지</option>
+                            <option value="/admin/item/new" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">상품 등록</option>
+                            <option value="/admin/items" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">상품 관리</option>
+                            <option value="/admin/notice/new" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">공지사항 등록</option>
+                            <option value="/admin/notices" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">공지사항 관리</option>
+                        </select>
+                        <select name="myPage" class="top" onchange="window.open(value, '_self');" sec:authorize="hasAnyAuthority('ROLE_USER')">
+                            <option>마이페이지</option>
+                            <option value="/members/mypage" sec:authorize="hasAnyAuthority('ROLE_USER')">내정보</option>
+                            <option value="/cart" sec:authorize="hasAnyAuthority('ROLE_USER')">장바구니</option>
+                            <option value="/orders" sec:authorize="hasAnyAuthority('ROLE_USER')">주문내역</option>
+                        </select>
+
+                        <li class="top" sec:authorize="isAnonymous()">
+                            <a href="/members/login">로그인</a>
+                        </li>
+                        <li class="top" sec:authorize="isAuthenticated()">
+                            <a href="/members/logout">로그아웃</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="headerCategory">  <!--카테고리-->
+                <ul class="menuCategory">
+                    <li class="menu"><a href="/category/food">사료</a></li>
+                    <li class="menu"><a href="/category/snack">영양간식</a></li>
+                    <li class="menu"><a href="/category/bath">목욕용품</a></li>
+                    <li class="menu"><a href="/category/bowel">위생/배변</a></li>
+                    <li class="menu"><a href="/category/clothes">장난감/옷</a></li>
+                    <li class="menu"><a href="/category/stuff">굿즈</a></li>
+                </ul>
+            </div>
+        </div>
+    <hr style="margin-top: 0;">
+</div>
+</html>

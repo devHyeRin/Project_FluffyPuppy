@@ -43,11 +43,14 @@ Thumbs.db
 # Environment / Secrets
 # ⚠️ 절대 커밋 금지
 ############################
+application-local.properties
 application-oauth.properties
-application-mail.properties
 application-prod.properties
-application-*.yml
-application-*.properties
+
+# yml 쓸 경우 대비
+application-local.yml
+application-oauth.yml
+application-prod.yml
 
 ############################
 # Upload / Static files

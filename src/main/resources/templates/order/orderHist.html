@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<th:block layout:fragment="css">
+  <style>
+    .repImgDiv{
+      margin-right: 15px;
+      margin-left: 15px;
+      height: auto;
+    }
+    .repImg{
+      height: 100px;
+      width: 100px;
+    }
+    .fs24{
+      font-size: 17px;
+    }
+    .order-wrap{
+      width: 1200px;
+      margin: 0 auto;
+    }
+    .flex-container {
+      display: flex;
+    }
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+      justify-content: space-evenly;
+    }
+    .table-cell {
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</th:block>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+
+    function formatPriceWithCommas(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    window.onload = function () {
+      const priceElements = document.querySelectorAll(".item-price");
+      priceElements.forEach(function (element) {
+        const price = parseInt(element.textContent.replace(/[^\d]/g, ""));
+        const formattedPrice = formatPriceWithCommas(price);
+        element.textContent = formattedPrice + '원';
+      });
+    };
+    function cancelOrder(orderId){
+      var token = $("meta[name='_csrf']").attr("content");
+      var header = $("meta[name='_csrf_header']").attr("content");
+
+      var url = "/order/" + orderId + "/cancel";
+      var paramData = {
+        orderId : orderId,
+      }
+
+      var param = JSON.stringify(paramData);
+
+      $.ajax({
+        url : url,
+        type : "POST",
+        contentType : "application/json",
+        data : param,
+        beforeSend : function (xhr){
+          /*데이터 전송하기 전에 헤더인 csrf 값을 설정*/
+          xhr.setRequestHeader(header, token);
+        },
+        dataType: "json",
+        cache : false,
+        success : function (result, status){
+          alert("주문이 취소되었습니다.");
+          location.href = '/orders/' + [[${page}]];
+        },
+        error : function (jqXHR, status, error){
+          if(jqXHR.status == '401'){
+            alert('로그인 후 이용해주세요');
+            location.href = '/members/login';
+          }
+          else{
+            alert(jqXHR.responseText);
+          }
+        }
+      });
+    }
+  </script>
+</th:block>
+
+<div layout:fragment="content">
+  <div class="order-wrap">
+    <div class="order-sub-wrap">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 25px; align-items: flex-end;">
+        <p class="h2"><span style="border-bottom: 5px solid pink">주문내역<span class="material-symbols-outlined">local_mall</span></span></p>
+        <ul style="margin: 0;">
+          <li><a href="/"><span class="material-symbols-outlined">home</span></a></li>
+          <li><span class="material-symbols-outlined">arrow_forward_ios</span></li>
+          <li>주문내역</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div>
+      <table class="table" style="vertical-align: center;">
+        <colgroup>
+          <col width="15%"/>
+          <col width="45%"/>
+          <col width="10%/">
+          <col width="25%/">
+        </colgroup>
+        <thead>
+        <tr class="text-center">
+          <th>주문일자</th>
+          <th>주문정보</th>
+          <th>총 금액</th>
+          <th>주문상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders.getContent()}">
+          <td class="text-center align-middle">
+            <p th:text="${order.orderDate}"></p>
+          </td>
+
+          <td class="table-cell">
+            <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex mb-3">
+              <div class="repImgDiv align-self-center">
+                  <div class="repImgDiv">
+                    <div class="flex-container">
+                      <img th:src="${orderItem.imgUrl}" class="rounded repImg" th:alt="${orderItem.itemNm}">
+                      <div class="item-info">
+                        <span th:text="${orderItem.itemNm}" class="fs24 font-weight-bold"></span>
+                        <div><span class="item-price" th:text="${orderItem.orderPrice} + '원'"></span>
+                        <span class="item-count" th:text="${orderItem.count} + '개'"></span></div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </td>
+
+          <td class="text-center align-middle">
+            <span class="item-price" th:text="${order.totalPrice} + '원'"></span>
+          </td>
+
+          <td class="text-center align-middle">
+            <div class="ml-3">
+              <th:block th:if="${order.orderStatus.isOrder()}">
+                <div><b>주문완료</b>
+                <button type="button" class="btn btn-outline-secondary" th:value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button></div>
+              </th:block>
+              <th:block th:if="${order.orderStatus.isCancelled() and order.cancelDate != null}">
+                <div><b style="color: red;">(취소 완료)</b>
+                <span th:text="${#temporals.format(order.cancelDate, 'yyyy-MM-dd HH:mm')}"></span></div>
+              </th:block>
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+
+    <div th:with="start=${(orders.number/maxPage)*maxPage+1}, end=(${(orders.totalPages == 0) ? 1 : (start + (maxPage - 1)
+  < orders.totalPages ? start + (maxPage - 1) : orders.totalPages)})">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${orders.number eq 0}?'disabled':''">
+          <a th:href="@{'/orders/' + ${orders.number-1}}" aria-label="Previous" class="page-link">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${orders.number eq page-1}?'active':''">
+          <a th:href="@{'/orders/' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+        </li>
+
+        <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages}?'disabled':''">
+          <a th:href="@{'/orders/' + ${orders.number+1}}" aria-label='Next' class="page-link">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+</html>

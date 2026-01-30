@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+    .card-title{
+      margin-top: 50px;
+      border-bottom: 2px solid gray;
+      border-top: 2px solid gray;
+    }
+    .notice-img{
+        width: 588px;
+        height: 500px;
+    }
+  </style>
+</th:block>
+
+<div layout:fragment="content">
+  <div class="mng_wrap">
+  <div style="display: flex; justify-content: space-between">
+    <p class="h2"><span style="border-bottom: 5px solid pink">공지사항<span class="material-symbols-outlined">notifications_active</span></span></p>
+    <ul style="margin: 0;">
+      <li><a href="/"><span class="material-symbols-outlined">home</span></a></li>
+      <li><span class="material-symbols-outlined">arrow_forward_ios</span></li>
+      <li>공지사항</li>
+    </ul>
+  </div>
+  <hr>
+
+   <div class="card-title">
+       <h5 th:text="${notice.noticeTitle}" style="padding: 16px;"></h5>
+   </div>
+    <div class="card-text">
+      <p th:text="${notice.noticeContent}" style="padding: 16px;"></p>
+    </div>
+      <div th:each="noticeImg : ${notice.noticeImgDtoList}" class="text-center">
+          <img th:if="${not #strings.isEmpty(noticeImg.imgUrl)}" th:src="${noticeImg.imgUrl}" class="rounded mgb-15 notice-img" width="800">
+      </div>
+    <hr>
+
+    <div>
+      <a href="/notices" class="btn btn-outline-dark" style="float:right;">목록</a>
+    </div>
+  </div>
+</div>
+</html>
