@@ -101,23 +101,36 @@ public class CartService {
         cartItemRepository.delete(cartItem);
     }
     /*카트 상품 주문*/
-    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email){
+    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList){
+
+        Member member = (Member) httpSession.getAttribute("member");
+        if (member == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+
         List<OrderDto> orderDtoList = new ArrayList<>();
-        for(CartOrderDto cartOrderDto : cartOrderDtoList){
+
+        for (CartOrderDto cartOrderDto : cartOrderDtoList) {
             CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId())
                     .orElseThrow(EntityNotFoundException::new);
+
             OrderDto orderDto = new OrderDto();
             orderDto.setItemId(cartItem.getItem().getId());
             orderDto.setCount(cartItem.getCount());
+
             orderDtoList.add(orderDto);
         }
-        Long orderId = orderService.orders(orderDtoList, email);
 
-        for(CartOrderDto cartOrderDto : cartOrderDtoList){
+        // ✅ email 대신 session member 사용
+        Long orderId = orderService.orders(orderDtoList, member.getEmail());
+
+        // 주문 후 장바구니 상품 삭제
+        for (CartOrderDto cartOrderDto : cartOrderDtoList) {
             CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId())
                     .orElseThrow(EntityNotFoundException::new);
             cartItemRepository.delete(cartItem);
         }
+
         return orderId;
     }
 }

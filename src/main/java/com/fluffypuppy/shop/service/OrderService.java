@@ -24,16 +24,19 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class OrderService {
+
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
 
-    public Long order(OrderDto orderDto, String email){
+    public Long order(OrderDto orderDto, String email) {
+
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
 
         List<OrderItem> orderItemList = new ArrayList<>();
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
@@ -45,59 +48,74 @@ public class OrderService {
         return order.getId();
     }
 
-    /*주문 목록 조회*/
+    /* 주문 목록 조회 */
     @Transactional(readOnly = true)
-    public Page<OrderHistDto> getOrderList(String email, Pageable pageable){
+    public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
+
         List<Order> orders = orderRepository.findOrders(email, pageable);
         Long totalCount = orderRepository.countOrder(email);
 
         List<OrderHistDto> orderHistDtos = new ArrayList<>();
 
-        for(Order order : orders){
+        for (Order order : orders) {
             OrderHistDto orderHistDto = new OrderHistDto(order);
-            List<OrderItem> orderItems = order.getOrderItems();
 
-            for(OrderItem orderItem : orderItems){
-                ItemImg itemImg = itemImgRepository.findByItemIdAndRepImgYn(orderItem.getItem().getId(), "Y");
-                OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl());
+            for (OrderItem orderItem : order.getOrderItems()) {
+                ItemImg itemImg = itemImgRepository
+                        .findByItemIdAndRepImgYn(orderItem.getItem().getId(), "Y");
+
+                OrderItemDto orderItemDto =
+                        new OrderItemDto(orderItem, itemImg.getImgUrl());
+
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
             orderHistDtos.add(orderHistDto);
         }
-        return new PageImpl<OrderHistDto>(orderHistDtos, pageable, totalCount);
+
+        return new PageImpl<>(orderHistDtos, pageable, totalCount);
     }
 
     @Transactional(readOnly = true)
-    public boolean validateOrder(Long orderId, String email){
-        Member curMember = memberRepository.findByEmail(email);
-        Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+    public boolean validateOrder(Long orderId, String email) {
+
+        Member curMember = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+
         Member savedMember = order.getMember();
 
-        if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())){
-            return false;
-        }
-        return true;
+        return StringUtils.equals(curMember.getEmail(), savedMember.getEmail());
     }
 
-    public void cancelOrder(Long orderId){
+    public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(EntityNotFoundException::new);
         order.cancelOrder();
     }
 
-    public Long orders(List<OrderDto> orderDtoList, String email){
-        Member member = memberRepository.findByEmail(email);
+    public Long orders(List<OrderDto> orderDtoList, String email) {
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
 
         List<OrderItem> orderItemList = new ArrayList<>();
 
-        for(OrderDto orderDto : orderDtoList){
-            Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
-            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+        for (OrderDto orderDto : orderDtoList) {
+            Item item = itemRepository.findById(orderDto.getItemId())
+                    .orElseThrow(EntityNotFoundException::new);
+
+            OrderItem orderItem =
+                    OrderItem.createOrderItem(item, orderDto.getCount());
+
             orderItemList.add(orderItem);
         }
+
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
 
-        return  order.getId();
+        return order.getId();
     }
 }
+
