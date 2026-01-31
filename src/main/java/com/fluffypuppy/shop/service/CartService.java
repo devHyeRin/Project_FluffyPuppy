@@ -15,11 +15,8 @@ import com.fluffypuppy.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,86 +24,86 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class CartService {
+
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final OrderService orderService;
-    private final HttpSession httpSession;
 
-    public Long addCart(CartItemDto cartItemDto){
+    /* 장바구니 담기 */
+    public Long addCart(CartItemDto cartItemDto, String email) {
 
-        Member member = (Member) httpSession.getAttribute("member");
-        if (member == null) {
-            throw new IllegalStateException("로그인이 필요합니다.");
-        }
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
 
         Item item = itemRepository.findById(cartItemDto.getItemId())
-                .orElseThrow(EntityExistsException::new);
+                .orElseThrow(EntityNotFoundException::new);
 
         Cart cart = cartRepository.findByMemberId(member.getId());
-        if(cart == null){      // 카트 생성 전
+        if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
         }
-        /*카트에 담긴 아이템 추출*/
-        CartItem savedCartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
 
-        if(savedCartItem != null){  // 카트에 아이템이 존재하는 경우
+        CartItem savedCartItem =
+                cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
+
+        if (savedCartItem != null) {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getId();
         }
 
-        CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
+        CartItem cartItem =
+                CartItem.createCartItem(cart, item, cartItemDto.getCount());
         cartItemRepository.save(cartItem);
+
         return cartItem.getId();
     }
 
+    /* 장바구니 목록 */
     @Transactional(readOnly = true)
-    public List<CartDetailDto> getCartList(){
+    public List<CartDetailDto> getCartList(String email) {
 
-        Member member = (Member) httpSession.getAttribute("member");
-        if (member == null) {
-            return new ArrayList<>();
-        }
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
 
         Cart cart = cartRepository.findByMemberId(member.getId());
-        if (cart == null) {
-            return new ArrayList<>();
-        }
+        if (cart == null) return new ArrayList<>();
 
         return cartItemRepository.findCartDetailDtoList(cart.getId());
     }
 
+    /* 권한 체크 */
     @Transactional(readOnly = true)
-    public boolean validateCartItem(Long cartItemId){
-        Member curMember = (Member) httpSession.getAttribute("member");
-        if (curMember == null) return false;
+    public boolean validateCartItem(Long cartItemId, String email) {
 
-        CartItem cartItem =
-                cartItemRepository.findById(cartItemId)
-                        .orElseThrow(EntityNotFoundException::new);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
 
-        Member savedMember = cartItem.getCart().getMember();
-        return curMember.getId().equals(savedMember.getId());
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return cartItem.getCart().getMember().getId().equals(member.getId());
     }
-    /*카트 수정*/
-    public void updateCartItemCount(Long cartItemId, int count){
-        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+
+    public void updateCartItemCount(Long cartItemId, int count) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
         cartItem.updateCount(count);
     }
-    /*카트 삭제*/
-    public void deleteCartItem(Long cartItemId){
-        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+
+    public void deleteCartItem(Long cartItemId) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
         cartItemRepository.delete(cartItem);
     }
-    /*카트 상품 주문*/
-    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList){
 
-        Member member = (Member) httpSession.getAttribute("member");
-        if (member == null) {
-            throw new IllegalStateException("로그인이 필요합니다.");
-        }
+    /* 장바구니 주문 */
+    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email) {
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
 
         List<OrderDto> orderDtoList = new ArrayList<>();
 
@@ -117,18 +114,13 @@ public class CartService {
             OrderDto orderDto = new OrderDto();
             orderDto.setItemId(cartItem.getItem().getId());
             orderDto.setCount(cartItem.getCount());
-
             orderDtoList.add(orderDto);
         }
 
-        // ✅ email 대신 session member 사용
         Long orderId = orderService.orders(orderDtoList, member.getEmail());
 
-        // 주문 후 장바구니 상품 삭제
         for (CartOrderDto cartOrderDto : cartOrderDtoList) {
-            CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId())
-                    .orElseThrow(EntityNotFoundException::new);
-            cartItemRepository.delete(cartItem);
+            cartItemRepository.deleteById(cartOrderDto.getCartItemId());
         }
 
         return orderId;

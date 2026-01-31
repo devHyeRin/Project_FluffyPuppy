@@ -7,6 +7,7 @@ import com.fluffypuppy.shop.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +24,16 @@ public class CartController {
     private final CartService cartService;
 
     /* 장바구니 담기 */
-    @PostMapping(value = "/cart")
-    public @ResponseBody ResponseEntity<?> order(
+    @PostMapping("/cart")
+    @ResponseBody
+    public ResponseEntity<?> addCart(
             @RequestBody @Valid CartItemDto cartItemDto,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,
+            Authentication authentication) {
+
+        if (authentication == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+        }
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -36,36 +43,45 @@ public class CartController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        Long cartItemId;
-        try {
-            cartItemId = cartService.addCart(cartItemDto);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        String email = authentication.getName();
 
+        Long cartItemId = cartService.addCart(cartItemDto, email);
         return new ResponseEntity<>(cartItemId, HttpStatus.OK);
     }
 
     /* 장바구니 목록 */
-    @GetMapping(value = "/cart")
-    public String orderHist(Model model) {
-        List<CartDetailDto> cartDetailDtoList = cartService.getCartList();
+    @GetMapping("/cart")
+    public String cartList(Model model, Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/members/login";
+        }
+
+        String email = authentication.getName();
+        List<CartDetailDto> cartDetailDtoList = cartService.getCartList(email);
+
         model.addAttribute("cartItems", cartDetailDtoList);
         return "cart/cartList";
     }
 
     /* 장바구니 수량 수정 */
-    @PatchMapping(value = "/cartItem/{cartItemId}")
-    public @ResponseBody ResponseEntity<?> updateCartItem(
-            @PathVariable("cartItemId") Long cartItemId,
-            int count) {
+    @PatchMapping("/cartItem/{cartItemId}")
+    @ResponseBody
+    public ResponseEntity<?> updateCartItem(
+            @PathVariable Long cartItemId,
+            int count,
+            Authentication authentication) {
 
-        if (count <= 0) {
-            return new ResponseEntity<>("최소 1개이상 담아주세요.", HttpStatus.BAD_REQUEST);
+        if (authentication == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
-        if (!cartService.validateCartItem(cartItemId)) {
-            return new ResponseEntity<>("수정권한이 없습니다.", HttpStatus.FORBIDDEN);
+        if (count <= 0) {
+            return new ResponseEntity<>("최소 1개 이상 담아주세요.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!cartService.validateCartItem(cartItemId, authentication.getName())) {
+            return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
         cartService.updateCartItemCount(cartItemId, count);
@@ -73,12 +89,18 @@ public class CartController {
     }
 
     /* 장바구니 상품 삭제 */
-    @DeleteMapping(value = "/cartItem/{cartItemId}")
-    public @ResponseBody ResponseEntity<?> deleteCartItem(
-            @PathVariable("cartItemId") Long cartItemId) {
+    @DeleteMapping("/cartItem/{cartItemId}")
+    @ResponseBody
+    public ResponseEntity<?> deleteCartItem(
+            @PathVariable Long cartItemId,
+            Authentication authentication) {
 
-        if (!cartService.validateCartItem(cartItemId)) {
-            return new ResponseEntity<>("수정권한이 없습니다.", HttpStatus.FORBIDDEN);
+        if (authentication == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!cartService.validateCartItem(cartItemId, authentication.getName())) {
+            return new ResponseEntity<>("삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
         cartService.deleteCartItem(cartItemId);
@@ -86,23 +108,28 @@ public class CartController {
     }
 
     /* 장바구니 주문 */
-    @PostMapping(value = "/cart/orders")
-    public @ResponseBody ResponseEntity<?> orderCartItem(
-            @RequestBody CartOrderDto cartOrderDto) {
+    @PostMapping("/cart/orders")
+    @ResponseBody
+    public ResponseEntity<?> orderCartItem(
+            @RequestBody CartOrderDto cartOrderDto,
+            Authentication authentication) {
 
-        List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
-
-        if (cartOrderDtoList == null || cartOrderDtoList.isEmpty()) {
-            return new ResponseEntity<>("주문할 상품을 선택해주세요.", HttpStatus.FORBIDDEN);
+        if (authentication == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
-        for (CartOrderDto cartOrder : cartOrderDtoList) {
-            if (!cartService.validateCartItem(cartOrder.getCartItemId())) {
-                return new ResponseEntity<>("주문 권한이 없습니다.", HttpStatus.FORBIDDEN);
-            }
+        if (cartOrderDto.getCartOrderDtoList() == null ||
+                cartOrderDto.getCartOrderDtoList().isEmpty()) {
+            return new ResponseEntity<>("주문할 상품을 선택해주세요.", HttpStatus.BAD_REQUEST);
         }
 
-        Long orderId = cartService.orderCartItem(cartOrderDtoList);
+        String email = authentication.getName();
+
+        Long orderId = cartService.orderCartItem(
+                cartOrderDto.getCartOrderDtoList(),
+                email
+        );
+
         return new ResponseEntity<>(orderId, HttpStatus.OK);
     }
 }
