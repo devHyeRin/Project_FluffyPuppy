@@ -23,6 +23,21 @@ public class CartController {
 
     private final CartService cartService;
 
+    /* 장바구니 목록 */
+    @GetMapping("/cart")
+    public String cartList(Model model, Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/members/login";
+        }
+
+        String email = authentication.getName();
+        List<CartDetailDto> cartDetailDtoList = cartService.getCartList(email);
+
+        model.addAttribute("cartItems", cartDetailDtoList);
+        return "cart/cartList";
+    }
+
     /* 장바구니 담기 */
     @PostMapping("/cart")
     @ResponseBody
@@ -47,21 +62,6 @@ public class CartController {
 
         Long cartItemId = cartService.addCart(cartItemDto, email);
         return new ResponseEntity<>(cartItemId, HttpStatus.OK);
-    }
-
-    /* 장바구니 목록 */
-    @GetMapping("/cart")
-    public String cartList(Model model, Authentication authentication) {
-
-        if (authentication == null) {
-            return "redirect:/members/login";
-        }
-
-        String email = authentication.getName();
-        List<CartDetailDto> cartDetailDtoList = cartService.getCartList(email);
-
-        model.addAttribute("cartItems", cartDetailDtoList);
-        return "cart/cartList";
     }
 
     /* 장바구니 수량 수정 */

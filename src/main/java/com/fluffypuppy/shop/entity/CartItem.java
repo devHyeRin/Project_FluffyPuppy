@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "cart_item")
 public class CartItem extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id")
     private Long id;
 
@@ -25,7 +25,7 @@ public class CartItem extends BaseEntity{
 
     private int count;
 
-    public static CartItem createCartItem(Cart cart, Item item, int count){
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
@@ -36,7 +36,9 @@ public class CartItem extends BaseEntity{
     public void addCount(int count){
         this.count += count;
     }
-    public void updateCount(int count){
+
+    public void updateCount(int count) {
+        if (count < 1) throw new IllegalArgumentException("수량은 1개 이상이어야 합니다.");
         this.count = count;
     }
 }
