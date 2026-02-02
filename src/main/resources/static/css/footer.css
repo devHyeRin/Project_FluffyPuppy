@@ -22,3 +22,27 @@
 .footer p {
     line-height: 1.6;
 }
+
+/* =========================
+   Responsive - Footer
+   ========================= */
+
+@media (max-width: 1279px) {
+    .footer-color {
+        width: 100%;
+        padding: 0 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .footer {
+        padding: 2.4rem 0;
+    }
+
+    .footer-color {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+        padding: 0 1.6rem;
+    }
+}

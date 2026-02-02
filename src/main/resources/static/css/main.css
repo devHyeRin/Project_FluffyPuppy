@@ -59,7 +59,7 @@
 
 .repImg {
     width: 100%;
-    height: 24rem;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 1rem;
     border: 0.1rem solid #eee;
@@ -82,3 +82,50 @@
     color: #333;
 }
 
+
+/* =========================
+   Responsive - Main
+   ========================= */
+
+/* Tablet */
+@media (max-width: 1279px) {
+    .main-container {
+        width: 100%;
+        padding: 0 2rem;
+    }
+
+    .main-title {
+        padding-left: 0; /* 타이틀 들여쓰기 제거 (정렬 안정화) */
+    }
+
+    .main_row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.4rem;
+    }
+
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .main-container {
+        padding: 0 1.6rem;
+    }
+
+    .main_row {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .product-link {
+        padding: 1.2rem;
+        border-radius: 1.2rem;
+    }
+
+    .item_title {
+        font-size: 1.3rem;
+    }
+
+    .price {
+        font-size: 1.3rem;
+    }
+}
