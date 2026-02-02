@@ -1,0 +1,84 @@
+/* =========================
+   Main Page
+   ========================= */
+
+.main-container {
+    width: 135rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* banner */
+.banner {
+    width: 100%;
+    height: 28rem;
+    object-fit: cover;
+}
+
+/* title */
+.main-title {
+    margin: 3rem 0 2rem;
+    text-align: left;
+    padding-left: 3.2rem;
+}
+
+.highlight {
+    color: #d27878;
+}
+
+/* =========================
+   Product Grid
+   ========================= */
+
+.main_row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.main_item {
+    display: flex;
+    justify-content: center;
+}
+
+.product-link {
+    color: inherit;
+    display: block;
+    padding: 1.6rem;
+    border-radius: 1.6rem;
+    background-color: #fff;
+    transition: all 0.25s ease;
+}
+
+.product-link:hover {
+    transform: translateY(-0.6rem);
+    box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+}
+
+.repImg {
+    width: 100%;
+    height: 24rem;
+    object-fit: cover;
+    border-radius: 1rem;
+    border: 0.1rem solid #eee;
+}
+
+.main_item_dtl {
+    margin-top: 1.2rem;
+}
+
+.item_title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+}
+
+.price {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+}
+

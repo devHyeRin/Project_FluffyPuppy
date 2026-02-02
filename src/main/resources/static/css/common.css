@@ -1,0 +1,69 @@
+/* =========================
+   Global Base
+   ========================= */
+
+html {
+    font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-family: 'Noto Sans KR', Arial, sans-serif;
+    color: #222;
+    overflow-x: hidden;
+}
+
+/* Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Common Image */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Content wrapper */
+.content-wrap {
+    min-height: 86rem; /* 860px */
+    padding-bottom: 6rem;
+}
+
+/* =========================
+   Pagination (Bootstrap override)
+   ========================= */
+.pagination .page-link {
+    color: #444;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #d27878;
+    border-color: #d27878;
+    color: #fff;
+}
+
+.pagination .page-link:hover {
+    color: #d27878;
+}
+
