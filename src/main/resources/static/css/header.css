@@ -27,13 +27,19 @@
     position: relative;
 }
 
-/* 로고 */
+/* =========================
+   Logo
+   ========================= */
+
 .headerLogo img {
     width: 26rem;
     height: auto;
 }
 
-/* 검색 영역 */
+/* =========================
+   Search
+   ========================= */
+
 .searchBtn {
     flex: 1;
     display: flex;
@@ -66,7 +72,10 @@
     cursor: pointer;
 }
 
-/* 상단 메뉴 (PC 전용) */
+/* =========================
+   PC Top Menu
+   ========================= */
+
 .myInfo {
     display: flex;
     gap: 2rem;
@@ -109,7 +118,6 @@
 
 .menu:hover {
     color: #d27878;
-    border-top: 0.2rem solid #d27878;
 }
 
 /* =========================
@@ -166,7 +174,7 @@
 }
 
 /* =========================
-   Tablet
+   Tablet (768 ~ 1279)
    ========================= */
 
 @media (max-width: 1279px) {
@@ -198,7 +206,7 @@
         z-index: 1001;
     }
 
-    /* PC 전용 메뉴 완전 제거 */
+    /* PC 메뉴 완전 제거 */
     .pc-only {
         display: none !important;
     }
@@ -232,12 +240,14 @@
         margin-left: -5rem;
     }
 
-    /* 카테고리 → 햄버거 슬라이드 메뉴 */
+    /* =========================
+       Mobile Slide Menu
+       ========================= */
+
     .headerCategory {
-        display: none;
         position: fixed;
         top: 0;
-        left: 0;
+        left: -100%;
 
         width: 75%;
         height: 100vh;
@@ -251,17 +261,18 @@
 
         z-index: 1000;
         box-shadow: 0.4rem 0 1.6rem rgba(0,0,0,0.15);
+
+        transition: left 0.3s ease;
     }
 
     .headerCategory.open {
-        display: flex;
+        left: 0;
     }
 
     .menu {
         font-size: 1.6rem;
     }
 
-    /* 모바일 전용 메뉴 */
     .mobile-only {
         display: block;
         font-size: 1.4rem;
