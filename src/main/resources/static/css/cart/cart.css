@@ -1,0 +1,50 @@
+/* =========================
+   Cart Page
+   ========================= */
+
+.cart-wrap {
+    width: 120rem;
+    margin: 0 auto;
+}
+
+/* 상품 이미지 */
+.repImgDiv {
+    margin: 0 1.5rem;
+}
+
+.repImg {
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+}
+
+/* 텍스트 */
+.fs18 {
+    font-size: 1.8rem;
+}
+
+.fs24 {
+    font-size: 2.4rem;
+}
+
+/* 테이블 */
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+/* 총 금액 */
+#orderTotalPrice {
+    font-size: 2.2rem;
+    color: #dc3545;
+}
+
+/* 버튼 영역 */
+.cart-actions {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.cart-actions .btn {
+    margin: 0 0.5rem;
+}

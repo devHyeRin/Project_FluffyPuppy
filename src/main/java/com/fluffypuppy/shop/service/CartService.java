@@ -33,32 +33,31 @@ public class CartService {
 
     /* 장바구니 담기 */
     public Long addCart(CartItemDto cartItemDto, String email) {
-
+        // 1. 회원 조회 (OAuth2User인 경우도 고려하여 이메일로 조회)
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
 
         Item item = itemRepository.findById(cartItemDto.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("상품 정보를 찾을 수 없습니다."));
 
+        // 2. 해당 회원의 장바구니 찾기 (없으면 생성 - Get or Create 패턴)
         Cart cart = cartRepository.findByMemberId(member.getId());
         if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
         }
 
-        CartItem savedCartItem =
-                cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
+        // 3. 이미 장바구니에 담긴 상품인지 확인
+        CartItem savedCartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
 
         if (savedCartItem != null) {
             savedCartItem.addCount(cartItemDto.getCount());
             return savedCartItem.getId();
+        } else {
+            CartItem cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
+            cartItemRepository.save(cartItem);
+            return cartItem.getId();
         }
-
-        CartItem cartItem =
-                CartItem.createCartItem(cart, item, cartItemDto.getCount());
-        cartItemRepository.save(cartItem);
-
-        return cartItem.getId();
     }
 
     /* 장바구니 목록 */
