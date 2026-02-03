@@ -1,18 +1,15 @@
 package com.fluffypuppy.shop.entity;
 
-import lombok.Generated;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cart")
 @Getter
-@Setter
-@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cart extends BaseEntity{
+
     @Id
     @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +19,9 @@ public class Cart extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static Cart createCart(Member member){
+    public static Cart createCart(Member member) {
         Cart cart = new Cart();
-        cart.setMember(member);
+        cart.member = member;
         return cart;
     }
 
