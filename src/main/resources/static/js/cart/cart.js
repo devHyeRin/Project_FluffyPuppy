@@ -21,7 +21,13 @@ function bindEvents() {
 
     const checkAllBox = document.getElementById("checkall");
     if (checkAllBox) {
-        checkAllBox.addEventListener("change", checkAll);
+        checkAllBox.addEventListener("change", (e) => {
+            const isChecked = e.target.checked;
+            document.querySelectorAll("input[name=cartChkBox]").forEach(cb => {
+                cb.checked = isChecked;
+            });
+            getOrderTotalPrice();
+        });
     }
 }
 
@@ -49,11 +55,10 @@ function getOrderTotalPrice() {
         const id = cb.value;
         const price = document.querySelector(`#price_${id}`).dataset.price;
         const count = document.querySelector(`#count_${id}`).value;
-        total += price * count;
+        total += parseInt(price) * parseInt(count);
     });
 
-    document.getElementById("orderTotalPrice").textContent =
-        formatPriceWithCommas(total) + "원";
+    document.getElementById("orderTotalPrice").textContent = formatPriceWithCommas(total) + "원";
 }
 
 /* =========================
@@ -61,9 +66,14 @@ function getOrderTotalPrice() {
    ========================= */
 function changeCount(input, cartItemId) {
     const count = input.value;
+    if (count < 1) {
+        alert("최소 수량은 1개입니다.");
+        input.value = 1;
+        return;
+    }
+
     const price = document.querySelector(`#price_${cartItemId}`).dataset.price;
-    document.querySelector(`#totalPrice_${cartItemId}`).textContent =
-        formatPriceWithCommas(price * count) + "원";
+    document.querySelector(`#totalPrice_${cartItemId}`).textContent = formatPriceWithCommas(price * count) + "원";
 
     getOrderTotalPrice();
     updateCartItemCount(cartItemId, count);
@@ -77,7 +87,7 @@ function updateCartItemCount(cartItemId, count) {
         url: `/cartItem/${cartItemId}?count=${count}`,
         type: "PATCH",
         beforeSend: xhr => xhr.setRequestHeader(header, token),
-        success: () => console.log("수량 업데이트 성공"),
+        success: () => console.log("수량 업데이트 완료"),
         error: handleAjaxError
     });
 }
@@ -86,8 +96,7 @@ function updateCartItemCount(cartItemId, count) {
    Delete
    ========================= */
 function deleteSelected() {
-    const selected = [...document.querySelectorAll("input[name=cartChkBox]:checked")]
-        .map(cb => cb.value);
+    const selected = [...document.querySelectorAll("input[name=cartChkBox]:checked")];
 
     if (selected.length === 0) {
         alert("삭제할 상품을 선택해주세요.");
@@ -96,18 +105,22 @@ function deleteSelected() {
 
     if (!confirm("선택한 상품을 삭제하시겠습니까?")) return;
 
-    selected.forEach(id => deleteCartItem(id));
+    const promises = selected.map(cb => deleteCartItemRequest(cb.value));
+
+    Promise.all(promises).then(() => {
+        alert("삭제되었습니다.");
+        location.reload();
+    });
 }
 
-function deleteCartItem(cartItemId) {
+function deleteCartItemRequest(cartItemId) {
     const token = document.querySelector("meta[name=_csrf]").content;
     const header = document.querySelector("meta[name=_csrf_header]").content;
 
-    $.ajax({
+    return $.ajax({
         url: `/cartItem/${cartItemId}`,
         type: "DELETE",
         beforeSend: xhr => xhr.setRequestHeader(header, token),
-        success: () => location.reload(),
         error: handleAjaxError
     });
 }
@@ -131,9 +144,9 @@ function orders() {
         url: "/cart/orders",
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ cartOrderDtoList }),
+        data: JSON.stringify(cartOrderDtoList),
         beforeSend: xhr => xhr.setRequestHeader(header, token),
-        success: () => {
+        success: (result) => {
             alert("주문이 완료되었습니다.");
             location.href = "/orders";
         },
@@ -149,6 +162,6 @@ function handleAjaxError(jqXHR) {
         alert("로그인 후 이용해주세요.");
         location.href = "/members/login";
     } else {
-        alert(jqXHR.responseJSON?.message || "오류가 발생했습니다.");
+        alert(jqXHR.responseText || "오류가 발생했습니다.");
     }
 }
