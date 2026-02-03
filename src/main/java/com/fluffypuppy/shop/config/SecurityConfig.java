@@ -3,6 +3,7 @@ package com.fluffypuppy.shop.config;
 import com.fluffypuppy.shop.service.CustomOAuth2UserService;
 import com.fluffypuppy.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,10 +17,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     MemberService memberService;
+
+    @Autowired
     CustomOAuth2UserService customOAuth2UserService;
 
     @Override
