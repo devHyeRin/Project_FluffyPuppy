@@ -8,7 +8,10 @@ import com.fluffypuppy.shop.service.MemberUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,14 +107,20 @@ public class MemberController {
 
     /*내 정보 수정*/
     @GetMapping(value = "/mypage")
-    public String mypageForm(Model model, Principal principal){
-        String email = principal.getName();
+    public String mypageForm(Model model, Authentication authentication) {
+        // Principal에서 이메일 가져오기 (SNS/로컬 통합 방식)
+        String email = "";
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            email = ((UserDetails) authentication.getPrincipal()).getUsername();
+        } else if (authentication.getPrincipal() instanceof OAuth2User) {
+            email = ((OAuth2User) authentication.getPrincipal()).getAttribute("email");
+        }
+
         try {
             MemberFormDto memberFormDto = memberService.getMemberDtlByEmail(email);
             model.addAttribute("memberFormDto", memberFormDto);
-        }catch(EntityNotFoundException e){
+        } catch(EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 회원입니다.");
-            model.addAttribute("memberFormDto", new MemberFormDto());
             return "member/mypage";
         }
         return "member/mypage";

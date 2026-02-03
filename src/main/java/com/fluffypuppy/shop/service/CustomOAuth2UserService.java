@@ -4,7 +4,6 @@ import com.fluffypuppy.shop.config.OAuthAttributes;
 import com.fluffypuppy.shop.constant.Role;
 import com.fluffypuppy.shop.dto.SessionUser;
 import com.fluffypuppy.shop.entity.Member;
-import com.fluffypuppy.shop.entity.User;
 import com.fluffypuppy.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         Member member = saveOrUpdate(attributes);
-        httpSession.setAttribute("member", member);
+        httpSession.setAttribute("user", new SessionUser(member));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(member.getRole().name())),
@@ -49,15 +48,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private Member saveOrUpdate(OAuthAttributes attributes){
         Member member = memberRepository.findByEmail(attributes.getEmail())
+                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElseGet(() -> {
                     Member newMember = new Member();
                     newMember.setEmail(attributes.getEmail());
                     newMember.setName(attributes.getName());
-                    newMember.setProvider(attributes.getProvider()); // GOOGLE
-                    newMember.setRole(Role.USER);
+                    newMember.setPicture(attributes.getPicture());
+                    newMember.setProvider(attributes.getProvider());
+                    newMember.setRole(Role.USER); // 기본 권한 설정
                     return memberRepository.save(newMember);
                 });
-
         return member;
     }
 }

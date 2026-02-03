@@ -1,8 +1,6 @@
 package com.fluffypuppy.shop.config;
 
-import com.fluffypuppy.shop.constant.APIRole;
 import com.fluffypuppy.shop.constant.Provider;
-import com.fluffypuppy.shop.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -35,16 +33,12 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-
-        if ("google".equals(registrationId)) {
-            return ofGoogle(userNameAttributeName, attributes);
-        } else if ("naver".equals(registrationId)) {
+        if ("naver".equals(registrationId)) {
             return ofNaver("id", attributes);
         } else if ("kakao".equals(registrationId)) {
             return ofKaKao("id", attributes);
         }
-
-        throw new IllegalArgumentException("Unsupported OAuth provider");
+        return ofGoogle(userNameAttributeName, attributes);
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String,Object> attributes){
@@ -60,7 +54,6 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String,Object> attributes){
         Map<String,Object> response = (Map<String, Object>) attributes.get("response");
-
         return OAuthAttributes.builder()
                 .name((String)response.get("name"))
                 .email((String)response.get("email"))
@@ -71,20 +64,9 @@ public class OAuthAttributes {
                 .build();
     }
 
-    private static OAuthAttributes ofKaKao(String userNameAttributeName,
-                                           Map<String,Object> attributes){
+    private static OAuthAttributes ofKaKao(String userNameAttributeName, Map<String,Object> attributes){
         Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> profile = (Map<String, Object>) kakao_account.get("profile");
-
-        for(String key : kakao_account.keySet()){
-            System.out.println(key+"#######");
-            System.out.println(kakao_account.get(key)+"*********");
-        }
-
-        for(String str : profile.keySet()){
-            System.out.println(str+"!!!!!!!!!");
-            System.out.println(profile.get(str)+"$$$$$$$$");
-        }
 
         return OAuthAttributes.builder()
                 .name((String) profile.get("nickname"))

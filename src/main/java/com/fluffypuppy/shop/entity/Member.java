@@ -2,30 +2,27 @@ package com.fluffypuppy.shop.entity;
 
 import com.fluffypuppy.shop.constant.Provider;
 import com.fluffypuppy.shop.constant.Role;
-import com.fluffypuppy.shop.dto.ItemFormDto;
 import com.fluffypuppy.shop.dto.MemberFormDto;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "member")
-@Data
+@Getter @Setter
 public class Member extends BaseEntity{
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     @Column(unique = true)
     private String email;
 
-    private String password;
+    private String password;    // SNS 유저는 null 허용
 
     private String address1;
     private String address2;
@@ -35,8 +32,10 @@ public class Member extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String picture;       // SNS 로그인을 위한 필드
+
     @Enumerated(EnumType.STRING)
-    private Provider provider;
+    private Provider provider;   // LOCAL, GOOGLE, KAKAO, NAVER
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
@@ -52,12 +51,25 @@ public class Member extends BaseEntity{
         return member;
     }
 
-    public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncode){
+
+    public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         this.name = memberFormDto.getName();
-        this.password =passwordEncode.encode(memberFormDto.getPassword());
+
+        // 로컬 유저(비밀번호가 들어오는 경우)만 비밀번호 업데이트
+        if(memberFormDto.getPassword() != null && !memberFormDto.getPassword().isEmpty()){
+            this.password = passwordEncoder.encode(memberFormDto.getPassword());
+        }
+
         this.address1 = memberFormDto.getAddress1();
         this.address2 = memberFormDto.getAddress2();
         this.phoneNumber = memberFormDto.getPhoneNumber();
+    }
+
+    // SNS 정보 업데이트 메서드
+    public Member update(String name, String picture) {
+        this.name = name;
+        this.picture = picture;
+        return this;
     }
 
 }
