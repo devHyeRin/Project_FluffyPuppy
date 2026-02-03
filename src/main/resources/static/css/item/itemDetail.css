@@ -1,0 +1,90 @@
+/* 상품 상세 레이아웃 */
+.prod-wrap {
+    width: 1100px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.repImgDiv {
+    margin-right: 15px;
+    width: 50%;
+}
+
+.repImg {
+    width: 100%;
+    height: 470px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.wd50 {
+    width: 50%;
+    margin-left: 20px;
+}
+
+/* 상태 표시 */
+.soldout-label {
+    position: absolute;
+    z-index: 10;
+}
+
+.soldout-img {
+    width: 170px;
+    height: auto;
+}
+
+/* 가격 및 수량 */
+.quantity-container {
+    float: right;
+    width: 130px;
+    margin-bottom: 10px;
+}
+
+/* 네비게이션 메뉴 */
+.item-menu-nav {
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+.detail-nav {
+    display: flex;
+    justify-content: space-around;
+    border-top: 3px solid #ddd;
+    background: #fcefef;
+    padding: 10px;
+    list-style: none;
+}
+
+.detail-nav li {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 정보 테이블 */
+.dev-info {
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.dev-info th {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #eee;
+    width: 200px;
+}
+
+.dev-info td {
+    padding: 15px;
+    border: 1px solid #eee;
+}
+
+/* 이미지 및 간격 */
+.img-dtl-size {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.mgt-30 { margin-top: 30px; }
+.mgt-50 { margin-top: 120px; }
