@@ -1,27 +1,17 @@
 package com.fluffypuppy.shop.service;
 
-import com.fluffypuppy.shop.dto.ItemFormDto;
-import com.fluffypuppy.shop.dto.ItemImgDto;
 import com.fluffypuppy.shop.dto.MemberFormDto;
-import com.fluffypuppy.shop.entity.Item;
-import com.fluffypuppy.shop.entity.ItemImg;
 import com.fluffypuppy.shop.entity.Member;
 import com.fluffypuppy.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.metamodel.model.domain.internal.MapMember;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @Service
 @Transactional
@@ -49,13 +39,14 @@ public class MemberService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
 
-        return User.builder().username(member.getEmail())
-                .password(member.getPassword())
-                .roles(member.getRole().toString())
+        return User.builder()
+                .username(member.getEmail())
+                .password(member.getPassword() != null ? member.getPassword() : "") // SNS 유저는 비번이 없으므로 빈값 처리
+                .authorities(member.getRole().getKey()) // "ROLE_USER" 또는 "ROLE_ADMIN" 전달
                 .build();
     }
     

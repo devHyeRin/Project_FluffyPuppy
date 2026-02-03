@@ -1,6 +1,6 @@
 package com.fluffypuppy.shop.dto;
 
-import com.fluffypuppy.shop.entity.User;
+import com.fluffypuppy.shop.entity.Member;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -11,9 +11,9 @@ public class SessionUser implements Serializable {
     private String email;
     private String picture;
 
-    public SessionUser(User user){
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.picture = user.getPicture();
+    public SessionUser(Member member){
+        this.name = member.getName();
+        this.email = member.getEmail();
+        this.picture = member.getPicture();
     }
 }

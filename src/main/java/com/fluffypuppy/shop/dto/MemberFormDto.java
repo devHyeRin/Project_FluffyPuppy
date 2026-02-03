@@ -1,5 +1,6 @@
 package com.fluffypuppy.shop.dto;
 
+import com.fluffypuppy.shop.constant.Provider;
 import com.fluffypuppy.shop.constant.Role;
 import com.fluffypuppy.shop.entity.Member;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -26,7 +26,7 @@ public class MemberFormDto {
     private String email;
 
     @NotEmpty(message = "비밀번호는 필수 항목입니다.")
-    @Length(min = 8, max = 16, message = "비밀번호는 8자 이상, 영문자, 특수문자 포함 16자 이내로 입력해주세요.")
+    @Length(min = 8, max = 16, message = "비밀번호는 8~16자 사이로 입력해주세요.")
     private String password;
     private String confirmPassword;
 
@@ -39,17 +39,20 @@ public class MemberFormDto {
 
     private Role role;
 
-    public Role getRole(){
-        return role;
-    }
-
-    public void setRole(Role role){
-        this.role = role;
-    }
+    // SNS 로그인을 통해 들어온 유저를 식별하기 위한 필드
+    private String picture;
+    private Provider provider;
 
     private static ModelMapper modelMapper = new ModelMapper();
+
+    // 엔티티 -> DTO 변환 메서드
     public static MemberFormDto of(Member member){
-        return modelMapper.map(member, MemberFormDto.class);
+        MemberFormDto dto = modelMapper.map(member, MemberFormDto.class);
+        // SNS 유저인 경우 비밀번호 필드를 비워서 보안 유지 및 에러 방지
+        if(member.getProvider() != Provider.LOCAL) {
+            dto.setPassword(null);
+        }
+        return dto;
     }
 
 }
