@@ -55,7 +55,8 @@ public class CartService {
                 .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
 
         // 해당 회원의 장바구니 찾기 (없으면 생성)
-        Cart cart = cartRepository.findByMemberId(member.getId());
+        Cart cart = cartRepository.findByMemberEmail(email);
+
         if (cart == null) {
             cart = Cart.createCart(member);
             cartRepository.save(cart);
