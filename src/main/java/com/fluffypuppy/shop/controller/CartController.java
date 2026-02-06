@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,15 +25,35 @@ public class CartController {
 
     private final CartService cartService;
 
+    /**
+     * 로그인된 사용자의 이메일을 추출하는 공통 메소드
+     */
+    private String getEmailByAuthentication(Authentication authentication) {
+        if (authentication == null) return null;
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            // 일반 로그인 시 이메일 추출
+            return ((UserDetails) principal).getUsername();
+        } else if (principal instanceof OAuth2User) {
+            // SNS 로그인(구글, 카카오 등) 시 이메일 추출
+            return ((OAuth2User) principal).getAttribute("email");
+        }
+
+        return authentication.getName();
+    }
+
     /* 장바구니 목록 */
     @GetMapping("/cart")
     public String cartList(Model model, Authentication authentication) {
 
-        if (authentication == null) {
+        String email = getEmailByAuthentication(authentication);
+
+        if (email == null) {
             return "redirect:/members/login";
         }
 
-        String email = authentication.getName();
         List<CartDetailDto> cartDetailDtoList = cartService.getCartList(email);
 
         model.addAttribute("cartItems", cartDetailDtoList);
@@ -45,7 +67,8 @@ public class CartController {
             BindingResult bindingResult,
             Authentication authentication) {
 
-        if (authentication == null) {
+        String email = getEmailByAuthentication(authentication);
+        if (email == null) {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
@@ -57,10 +80,12 @@ public class CartController {
             return new ResponseEntity<>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        String email = authentication.getName();
-        Long cartItemId = cartService.addCart(cartItemDto, email);
-
-        return new ResponseEntity<>(cartItemId, HttpStatus.OK);
+        try {
+            Long cartItemId = cartService.addCart(cartItemDto, email);
+            return new ResponseEntity<>(cartItemId, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /* 장바구니 수량 수정 */
@@ -70,7 +95,8 @@ public class CartController {
             @RequestParam int count,
             Authentication authentication) {
 
-        if (authentication == null) {
+        String email = getEmailByAuthentication(authentication);
+        if (email == null) {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
@@ -78,7 +104,7 @@ public class CartController {
             return new ResponseEntity<>("최소 1개 이상 담아주세요.", HttpStatus.BAD_REQUEST);
         }
 
-        if (!cartService.validateCartItem(cartItemId, authentication.getName())) {
+        if (!cartService.validateCartItem(cartItemId, email)) {
             return new ResponseEntity<>("수정 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
@@ -92,11 +118,12 @@ public class CartController {
             @PathVariable Long cartItemId,
             Authentication authentication) {
 
-        if (authentication == null) {
+        String email = getEmailByAuthentication(authentication);
+        if (email == null) {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
-        if (!cartService.validateCartItem(cartItemId, authentication.getName())) {
+        if (!cartService.validateCartItem(cartItemId, email)) {
             return new ResponseEntity<>("삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 
@@ -110,7 +137,8 @@ public class CartController {
             @RequestBody List<CartOrderDto> cartOrderDtoList,
             Authentication authentication) {
 
-        if (authentication == null) {
+        String email = getEmailByAuthentication(authentication);
+        if (email == null) {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
@@ -119,14 +147,12 @@ public class CartController {
         }
 
         for (CartOrderDto cartOrder : cartOrderDtoList) {
-            if (!cartService.validateCartItem(cartOrder.getCartItemId(), authentication.getName())) {
+            if (!cartService.validateCartItem(cartOrder.getCartItemId(), email)) {
                 return new ResponseEntity<>("주문 권한이 없습니다.", HttpStatus.FORBIDDEN);
             }
         }
 
-        String email = authentication.getName();
         Long orderId = cartService.orderCartItem(cartOrderDtoList, email);
-
         return new ResponseEntity<>(orderId, HttpStatus.OK);
     }
 }
