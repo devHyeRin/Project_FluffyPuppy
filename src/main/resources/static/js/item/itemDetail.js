@@ -55,10 +55,48 @@ function addCart(){
     });
 }
 
+function order(){
+    const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+
+    const url = "/order";
+    const paramData = {
+        itemId : $("#itemId").val(),
+        count : $("#count").val()
+    };
+
+    $.ajax({
+        url : url,
+        type : "POST",
+        contentType : "application/json",
+        data : JSON.stringify(paramData),
+        beforeSend : function (xhr){
+            xhr.setRequestHeader(header, token);
+        },
+        success : function(){
+            alert("주문이 완료되었습니다.");
+            location.href = "/";
+        },
+        error : function(jqXHR){
+            if(jqXHR.status == 401){
+                alert("로그인 후 이용해주세요.");
+                location.href="/members/login";
+            } else {
+                alert(jqXHR.responseText || "주문 중 오류 발생");
+            }
+        }
+    });
+}
+
 /* 스크롤 이동 함수 */
-function scrollToSection(sectionId) {
+function scrollToSection(sectionId, element) {
+    // 모든 탭에서 active 클래스 제거
+    $('.detail-nav li').removeClass('active');
+    // 클릭된 탭에 active 클래스 추가
+    $(element).addClass('active');
+
     $('html, body').animate({
-        scrollTop: $('#' + sectionId).offset().top - 100
+        scrollTop: $('#' + sectionId).offset().top - 120
     }, 500);
 }
 
