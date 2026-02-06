@@ -18,71 +18,93 @@
 
 <div layout:fragment="content">
     <div class="prod-wrap">
-        <div class="mb-4">
-            <ul class="breadcrumb bg-transparent p-0">
-                <li class="breadcrumb-item"><a href="/"><i class="material-symbols-outlined" style="font-size: 20px;">home</i></a></li>
-                <li class="breadcrumb-item active">상품 상세</li>
-            </ul>
-        </div>
+        <nav class="breadcrumb-container">
+            <a href="/"><span class="material-symbols-outlined">home</span></a>
+            <span class="material-symbols-outlined separator">arrow_forward_ios</span>
+            <span class="current-page">상품 상세</span>
+        </nav>
 
         <input type="hidden" id="itemId" th:value="${item.id}">
 
-        <div class="row">
-            <div class="col-md-6 position-relative">
-                <div th:if="${!item.itemSellStatus.isSell()}" class="soldout-label">
-                    <img src="/img/sold_out.png" alt="Sold Out" class="soldout-img">
+        <div class="item-main-section">
+            <div class="item-image-box">
+                <div th:if="${!item.itemSellStatus.isSell()}" class="soldout-badge">
+                    <img src="/img/sold_out.png" alt="Sold Out">
                 </div>
-                <img th:src="${item.itemImgDtoList[0].imgUrl}" class="repImg" th:alt="${item.itemNm}">
+                <img th:src="${item.itemImgDtoList[0].imgUrl}" class="main-item-img" th:alt="${item.itemNm}">
             </div>
 
-            <div class="col-md-6 wd50">
-                <h2 class="fw-bold" th:text="${item.itemNm}"></h2>
-                <hr>
-                <div class="py-3">
-                    <h3 class="text-danger fw-bold">
+            <div class="item-info-card">
+                <div class="card-body">
+                    <h2 class="item-title" th:text="${item.itemNm}"></h2>
+                    <div class="price-section">
                         <input type="hidden" th:value="${item.price}" id="price">
+                        <span class="price-label">판매가</span>
                         <span class="item-price" th:text="${item.price}"></span>
-                    </h3>
-                    <p class="text-muted small">무료배송</p>
-                </div>
-                <hr>
-
-                <div class="mgt-50 text-end">
-                    <div class="input-group quantity-container mb-3 ms-auto">
-                        <span class="input-group-text">수량</span>
-                        <input type="number" name="count" id="count" class="form-control" value="1" min="1">
                     </div>
-                    <div class="mb-4">
-                        <h5 class="text-muted mb-1">총 결제 금액</h5>
-                        <h2 id="totalPrice" class="text-danger fw-bold item-price"></h2>
-                    </div>
-                </div>
 
-                <div class="text-end mt-4">
-                    <th:block th:if="${item.itemSellStatus.isSell()}">
-                        <button type="button" class="btn btn-outline-secondary btn-lg px-4 me-2" onclick="addCart()">장바구니 담기</button>
-                        <button type="button" class="btn btn-primary btn-lg px-5 fw-bold" style="background-color: #f59898; border: none;" onclick="order()">주문하기</button>
-                    </th:block>
-                    <button th:unless="${item.itemSellStatus.isSell()}" type="button" class="btn btn-danger btn-lg w-100">재입고 예정</button>
+                    <div class="shipping-info">
+                        <span class="label">배송정보</span>
+                        <span class="value">무료배송</span>
+                    </div>
+
+                    <hr class="divider">
+
+                    <div class="order-form">
+                        <div class="quantity-row">
+                            <span class="label">수량 선택</span>
+                            <div class="counter">
+                                <input type="number" name="count" id="count" value="1" min="1" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="total-price-row">
+                            <span class="label">총 결제 금액</span>
+                            <h3 id="totalPrice" class="total-price-value"></h3>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <th:block th:if="${item.itemSellStatus.isSell()}">
+                            <button type="button" class="btn btn-cart" onclick="addCart()">장바구니 담기</button>
+                            <button type="button" class="btn btn-order" onclick="order()">주문하기</button>
+                        </th:block>
+                        <button th:unless="${item.itemSellStatus.isSell()}" type="button" class="btn btn-soldout" disabled>품절된 상품입니다</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="item-menu-nav">
             <ul class="detail-nav">
-                <li onclick="scrollToSection('productDetailsSection')">상품상세</li>
-                <li onclick="scrollToSection('shippingInfoSection')">배송/교환/반품 안내</li>
+                <li class="active" onclick="scrollToSection('productDetailsSection', this)">상품상세</li>
+                <li onclick="scrollToSection('shippingInfoSection', this)">배송/교환/반품 안내</li>
             </ul>
         </div>
 
-        <div id="productDetailsSection" class="py-5">
-            <h4 class="fw-bold mb-4" style="color: #d27878;">Detail <i class="material-symbols-outlined align-middle">check_circle</i></h4>
-            <p class="lead" th:text="${item.itemDetail}"></p>
-            <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center mt-3">
-                <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="img-dtl-size rounded shadow-sm">
-            </div>
-        </div>
+        <!-- 상품 상세 섹션 -->
+        <section id="productDetailsSection" class="detail-section">
+            <h3 class="section-title">상품 상세</h3>
 
+            <div class="detail-content">
+                <img th:src="${item.itemImgDtoList[0].imgUrl}" alt="상품 상세 이미지">
+                <p th:text="${item.itemDetail}"></p>
+            </div>
+        </section>
+
+        <!-- 배송 / 교환 / 반품 안내 -->
+        <section id="shippingInfoSection" class="detail-section">
+            <h3 class="section-title">배송 / 교환 / 반품 안내</h3>
+
+            <div class="info-box">
+                <ul>
+                    <li>배송비: 무료배송</li>
+                    <li>배송 기간: 결제 후 2~3일 이내 출고</li>
+                    <li>교환/반품: 수령 후 7일 이내 가능</li>
+                    <li>단순 변심 시 왕복 배송비 발생</li>
+                </ul>
+            </div>
+        </section>
     </div>
 </div>
 </html>
