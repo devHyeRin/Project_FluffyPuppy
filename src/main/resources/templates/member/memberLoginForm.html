@@ -29,7 +29,10 @@
           <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요.">
         </div>
 
-        <p th:if="${loginErrorMsg}" class="error-message" th:text="${loginErrorMsg}"></p>
+        <p class="error-message"
+           th:text="${loginErrorMsg}"
+           th:classappend="${loginErrorMsg} ? '' : 'hidden'">
+        </p>
 
         <button type="submit" class="btn btn-login">로그인</button>
         <button type="button" class="btn btn-signup" id="signupBtn">회원가입</button>
