@@ -37,8 +37,6 @@ public class MemberFormDto {
     @NotEmpty(message = "전화번호는 필수 항목입니다.")
     private String phoneNumber;
 
-    private Role role;
-
     // SNS 로그인을 통해 들어온 유저를 식별하기 위한 필드
     private String picture;
     private Provider provider;

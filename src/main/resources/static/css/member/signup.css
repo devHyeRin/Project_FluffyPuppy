@@ -73,13 +73,6 @@
     flex: 1;
 }
 
-/* ===== 라디오 ===== */
-.radio-group {
-    display: flex;
-    gap: 20px;
-    font-size: 14px;
-}
-
 /* ===== 버튼 ===== */
 .btn {
     height: 46px;
