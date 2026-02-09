@@ -1,55 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.ofg"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 
-<!--사용자 css 추가-->
 <th:block layout:fragment="css">
-    <style>
-        .member_join_wrap{
-            margin: 0 auto; width: 1000px;
-        }
-        .member_join_title{
-            padding: 20px 5px 0;
-            margin: 0 0 20px;
-            border-bottom: 4px solid #fc7272;
-        }
-        .member_join_wrap .member_join_content{
-            width: 800px;
-            padding: 30px 30px;
-            margin: 0 auto;
-        }
-        .fieldError{
-            color: #dc3344;
-            margin-left: 140px;
-            font-size: 15px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/member/mypage.css}">
 </th:block>
-<!--스크립트 추가-->
+
 <th:block layout:fragment="script">
-    <script th:inline="javascript">
-        $(document).ready(function(){
-            var err = [[${errorMessage}]];
-            if(err != null){
-                alert(err);
-            }
-
-            $("#updateBtn").on("click",function(e){
-                alert("내 정보가 수정되었습니다");
-            });
-        });
-
-
-        function execDaumPostcode(){
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    document.querySelector("#roadAddress").value =  data.address;
-                }
-            }).open();
-        }
-    </script>
-
+    <script th:src="@{/js/member/mypage.js}" defer></script>
 </th:block>
 
 <div layout:fragment="content">
