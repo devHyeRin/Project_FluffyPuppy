@@ -115,7 +115,8 @@
 /* ===== 하단 버튼 ===== */
 .button-group {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     margin-top: 30px;
 }
