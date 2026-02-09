@@ -25,6 +25,13 @@
             <ul class="myInfo pc-only">
                 <li class="top"><a th:href="@{/notices}">공지사항</a></li>
 
+                <li sec:authorize="isAuthenticated()" class="top">
+                    <a th:href="@{/cart}">장바구니</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="top">
+                    <a th:href="@{/members/mypage}">마이페이지</a>
+                </li>
+
                 <li sec:authorize="isAnonymous()" class="top">
                     <a th:href="@{/members/login}">로그인</a>
                 </li>
@@ -36,10 +43,15 @@
         </div>
 
         <ul class="headerCategory">
-
-            <!-- 🔥 모바일 전용 상단 메뉴 -->
             <li class="mobile-only">
                 <a th:href="@{/notices}">공지사항</a>
+            </li>
+
+            <li class="mobile-only" sec:authorize="isAuthenticated()">
+                <a th:href="@{/cart}">장바구니</a>
+            </li>
+            <li class="mobile-only" sec:authorize="isAuthenticated()">
+                <a th:href="@{/members/mypage}">마이페이지</a>
             </li>
 
             <li class="mobile-only" sec:authorize="isAnonymous()">
@@ -50,10 +62,8 @@
                 <a th:href="@{/members/logout}">로그아웃</a>
             </li>
 
-            <!-- 구분선 (모바일) -->
             <li class="mobile-only divider"></li>
 
-            <!-- 카테고리 -->
             <li class="menu"><a th:href="@{/category/food}">사료</a></li>
             <li class="menu"><a th:href="@{/category/snack}">영양간식</a></li>
             <li class="menu"><a th:href="@{/category/bath}">목욕용품</a></li>
