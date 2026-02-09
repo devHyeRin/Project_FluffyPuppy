@@ -38,18 +38,18 @@ public class MemberController {
     @GetMapping(value = "/new")
     public String memberForm(Model model){
         model.addAttribute("memberFormDto", new MemberFormDto());
-        return "member/memberForm";
+        return "member/signup";
     }
 
     /*회원가입 정보 저장*/
     @PostMapping(value = "/new")
     public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            return "member/memberForm";
+            return "member/signup";
         }
         if (memberFormDto.getPassword() != null && !memberFormDto.getPassword().equals(memberFormDto.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "비밀번호가 일치하지 않습니다.");
-            return "member/memberForm";
+            return "member/signup";
         }
         try {
             Member member = Member.createMember(memberFormDto, passwordEncoder);
@@ -57,7 +57,7 @@ public class MemberController {
         }
         catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberForm";
+            return "member/signup";
         }
 
         return "redirect:/members/login";
@@ -79,30 +79,43 @@ public class MemberController {
     /*로그인, 로그아웃 맵핑*/
     @GetMapping(value = "/login")
     public String loginMember(){
-        return "member/memberLoginForm";
+        return "member/login";
     }
 
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
-        return "member/memberLoginForm";
+        return "member/login";
     }
 
     //인증메일 보내기
     @PostMapping("/{email}/emailConfirm")
-    public @ResponseBody ResponseEntity emailConfirm(@PathVariable("email") String email) throws Exception{
-        confirm = mailService.sendSimpleMessage(email);
-        return new ResponseEntity<String>("인증 메일을 전송했습니다. 메일함을 확인해주세요.", HttpStatus.OK);
+    public @ResponseBody ResponseEntity<Map<String, String>> emailConfirm(@PathVariable("email") String email) {
+        Map<String, String> res = new HashMap<>();
+        try {
+            confirm = mailService.sendSimpleMessage(email);
+            res.put("message", "인증 메일을 전송했습니다. 메일함을 확인해주세요.");
+            return ResponseEntity.ok(res);
+        } catch (Exception e) {
+            res.put("message", "메일 발송 서버에 문제가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+        }
     }
 
     //인증메일에 보낸 코드 체크
     @PostMapping("/{code}/codeCheck")
-    public @ResponseBody ResponseEntity codeConfirm(@PathVariable("code") String code) throws Exception{
-        if(code.equals(confirm)){
-            confirmCheck=true;
-            return new ResponseEntity<String> ("인증되었습니다.", HttpStatus.OK);
+    public @ResponseBody ResponseEntity<Map<String, String>> codeConfirm(@PathVariable("code") String code) {
+        Map<String, String> res = new HashMap<>();
+
+        if (code.equals(confirm)) {
+            confirmCheck = true;
+            res.put("message", "이메일 인증이 완료되었습니다.");
+            return ResponseEntity.ok(res); // 200 OK
+        } else {
+            confirmCheck = false;
+            res.put("message", "인증 코드가 올바르지 않습니다. 다시 확인해주세요.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
         }
-        return new ResponseEntity<String> ("인증 코드를 올바르게 입력해주세요.", HttpStatus.BAD_REQUEST);
     }
 
     /*내 정보 수정*/

@@ -30,6 +30,7 @@ public class Member extends BaseEntity{
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     private String picture;       // SNS 로그인을 위한 필드
@@ -43,10 +44,9 @@ public class Member extends BaseEntity{
         member.setEmail(memberFormDto.getEmail());
         member.setAddress1(memberFormDto.getAddress1());
         member.setAddress2(memberFormDto.getAddress2());
-        String password = passwordEncoder.encode(memberFormDto.getPassword());
-        member.setPassword(password);
+        member.setPassword(passwordEncoder.encode(memberFormDto.getPassword()));
         member.setPhoneNumber(memberFormDto.getPhoneNumber());
-        member.setRole(memberFormDto.getRole());
+        member.setRole(Role.USER);
         member.setProvider(Provider.LOCAL);
         return member;
     }
