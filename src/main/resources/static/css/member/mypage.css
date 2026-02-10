@@ -1,18 +1,33 @@
-.member_join_wrap{
-    margin: 0 auto; width: 1000px;
+.signup-container.mypage-container {
+    max-width: 550px;
+    margin: 60px auto;
 }
-.member_join_title{
-    padding: 20px 5px 0;
-    margin: 0 0 20px;
-    border-bottom: 4px solid #fc7272;
+
+.mypage-container input:read-only {
+    background-color: #f8f9fa;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #eee;
 }
-.member_join_wrap .member_join_content{
-    width: 800px;
-    padding: 30px 30px;
-    margin: 0 auto;
+
+.mypage-container .button-group {
+    margin-top: 40px;
+    gap: 12px;
 }
-.fieldError{
-    color: #dc3344;
-    margin-left: 140px;
-    font-size: 15px;
+
+.mypage-container .button-group .btn {
+    flex: 1;
+    height: 50px;
+}
+
+.mypage-container .btn-primary {
+    background-color: #f59898;
+    color: #fff;
+    border: none;
+}
+
+.mypage-container .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
