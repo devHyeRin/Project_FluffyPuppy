@@ -142,13 +142,20 @@ public class MemberController {
     /*내정보 수정 저장*/
     @PostMapping(value = "/mypage/{memberId}")
     public String memberUpdate(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
+
+        if (!memberFormDto.getPassword().isEmpty() &&
+                !memberFormDto.getPassword().equals(memberFormDto.getConfirmPassword())) {
+
+            bindingResult.rejectValue("confirmPassword", "passwordIncorret", "비밀번호가 일치하지 않습니다.");
+        }
+
         if(bindingResult.hasErrors()){
             return "member/mypage";
         }
         try {
             memberUpdateService.updateMember(memberFormDto);
         }catch (IllegalStateException e){
-            model.addAttribute("errorMessage",  e.getMessage());
+            model.addAttribute("errorMessage",  "정보 수정 중 오류가 발생했습니다.");
             return "member/mypage";
         }
         return "redirect:/";
