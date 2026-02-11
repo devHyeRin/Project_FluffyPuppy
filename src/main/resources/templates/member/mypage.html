@@ -9,10 +9,13 @@
 </th:block>
 
 <th:block layout:fragment="script">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/member/mypage.js}" defer></script>
 </th:block>
 
 <div layout:fragment="content">
+    <input type="hidden" id="serverMsg" th:value="${msg}">
+
     <div class="login-container signup-container mypage-container">
         <div class="login-title">
             <h2>내 정보 수정 <span class="material-symbols-outlined">manage_accounts</span></h2>
@@ -20,7 +23,7 @@
         </div>
 
         <div class="login-content">
-            <form th:action="@{'/members/mypage/' + ${memberFormDto.id}}" method="post" th:object="${memberFormDto}">
+            <form th:action="@{/members/mypage}" method="post" th:object="${memberFormDto}">
                 <input type="hidden" th:field="*{id}">
 
                 <div class="form-group">
@@ -30,13 +33,13 @@
 
                 <div class="form-group">
                     <label th:for="password">비밀번호 <span class="required">*</span></label>
-                    <input type="password" th:field="*{password}" class="form-input" placeholder="변경할 비밀번호(8~16자)">
+                    <input type="password" th:field="*{password}" id="password" class="form-input" placeholder="변경할 비밀번호(8~16자)">
                     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
                 </div>
 
                 <div class="form-group">
                     <label th:for="confirmPassword">비밀번호 확인</label>
-                    <input type="password" th:field="*{confirmPassword}" class="form-input">
+                    <input type="password" th:field="*{confirmPassword}" id="confirmPassword" class="form-input">
                     <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="fieldError"></p>
                 </div>
 
@@ -58,7 +61,7 @@
                         <input type="text" th:field="*{address1}" id="roadAddress" class="form-input" readonly>
                         <button type="button" class="btn btn-sub" onclick="execDaumPostcode()">주소 검색</button>
                     </div>
-                    <input type="text" th:field="*{address2}" class="form-input" placeholder="상세 주소를 입력해주세요.">
+                    <input type="text" th:field="*{address2}" id="address2" class="form-input" placeholder="상세 주소를 입력해주세요.">
                     <p th:if="${#fields.hasErrors('address1')}" th:errors="*{address1}" class="fieldError"></p>
                 </div>
 
@@ -72,6 +75,4 @@
         </div>
     </div>
 </div>
-
 </html>
-

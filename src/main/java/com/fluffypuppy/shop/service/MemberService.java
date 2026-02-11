@@ -22,6 +22,11 @@ public class MemberService implements UserDetailsService {
 
     /*회원 저장*/
     public Member saveMember(Member member){
+        // 회원가입 시 비밀번호가 없는 경우 예외 처리
+        if (member.getPassword() == null || member.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("회원가입 시 비밀번호는 필수입니다.");
+        }
+
         validateDuplicateMember(member);
         return memberRepository.save(member);
 

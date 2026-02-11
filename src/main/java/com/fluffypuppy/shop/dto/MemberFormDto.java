@@ -1,7 +1,6 @@
 package com.fluffypuppy.shop.dto;
 
 import com.fluffypuppy.shop.constant.Provider;
-import com.fluffypuppy.shop.constant.Role;
 import com.fluffypuppy.shop.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +24,7 @@ public class MemberFormDto {
     @Email(message = "이메일 형식으로 입력해주세요.")
     private String email;
 
-    @NotEmpty(message = "비밀번호는 필수 항목입니다.")
+//    @NotEmpty(message = "비밀번호는 필수 항목입니다.")
     @Length(min = 8, max = 16, message = "비밀번호는 8~16자 사이로 입력해주세요.")
     private String password;
     private String confirmPassword;

@@ -54,15 +54,14 @@ public class Member extends BaseEntity{
 
     public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         this.name = memberFormDto.getName();
-
-        // 로컬 유저(비밀번호가 들어오는 경우)만 비밀번호 업데이트
-        if(memberFormDto.getPassword() != null && !memberFormDto.getPassword().isEmpty()){
-            this.password = passwordEncoder.encode(memberFormDto.getPassword());
-        }
-
         this.address1 = memberFormDto.getAddress1();
         this.address2 = memberFormDto.getAddress2();
         this.phoneNumber = memberFormDto.getPhoneNumber();
+
+        // 로컬 유저(비밀번호가 들어오는 경우)만 비밀번호 업데이트
+        if(memberFormDto.getPassword() != null && !memberFormDto.getPassword().trim().isEmpty()){
+            this.password = passwordEncoder.encode(memberFormDto.getPassword());
+        }
     }
 
     // SNS 정보 업데이트 메서드
