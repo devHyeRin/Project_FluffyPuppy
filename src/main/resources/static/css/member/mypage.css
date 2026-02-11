@@ -1,0 +1,33 @@
+.signup-container.mypage-container {
+    max-width: 550px;
+    margin: 60px auto;
+}
+
+.mypage-container input:read-only {
+    background-color: #f8f9fa;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+.mypage-container .button-group {
+    margin-top: 40px;
+    gap: 12px;
+}
+
+.mypage-container .button-group .btn {
+    flex: 1;
+    height: 50px;
+}
+
+.mypage-container .btn-primary {
+    background-color: #f59898;
+    color: #fff;
+    border: none;
+}
+
+.mypage-container .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}

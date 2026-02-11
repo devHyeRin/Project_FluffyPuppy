@@ -1,6 +1,6 @@
 /* ===== 카드 레이아웃 ===== */
 .signup-container {
-    max-width: 520px;
+    max-width: 550px;
     margin: 100px auto;
     padding: 40px;
     background: #fff;
@@ -43,6 +43,10 @@
     margin-bottom: 6px;
 }
 
+.addr-detail {
+    margin-top: 8px;
+}
+
 .required {
     color: #ff5a5a;
     margin-left: 4px;
@@ -55,6 +59,15 @@
     border-radius: 12px;
     border: 1px solid #ddd;
     font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form-group input:read-only {
+    background-color: #f8f9fa;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #eee;
 }
 
 .form-group input:focus {
@@ -66,11 +79,13 @@
 /* ===== inline (이메일 / 인증) ===== */
 .inline-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    margin-bottom: 8px;
 }
 
 .inline-group input {
     flex: 1;
+    min-width: 0;
 }
 
 /* ===== 버튼 ===== */
@@ -79,12 +94,20 @@
     padding: 0 18px;
     border-radius: 12px;
     font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .btn-primary {
-    background: #fd7996;
+    background: #f59898;
     color: #fff;
     border: none;
 }
@@ -117,6 +140,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 12px;
     margin-top: 30px;
+    width: 100%;
+}
+.button-group .btn {
+    flex: 1;
+    height: 50px;
 }

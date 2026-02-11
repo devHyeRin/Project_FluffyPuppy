@@ -29,14 +29,8 @@
                 <div class="inline-group">
                     <input type="email" id="username" th:field="*{email}" placeholder="example@email.com">
                     <button type="button" class="btn btn-sub" id="usernameCheckBtn">중복확인</button>
+                    <button type="button" class="btn btn-sub" id="sendMailBtn" disabled>인증하기</button>
                 </div>
-
-                <div class="inline-group">
-                    <button type="button" class="btn btn-sub" id="sendMailBtn" disabled>
-                        인증하기
-                    </button>
-                </div>
-
                 <p class="fieldError" th:errors="*{email}"></p>
                 <p class="form-message" id="usernameMsg"></p>
             </div>
@@ -80,11 +74,13 @@
             </div>
 
             <!-- 주소 -->
-            <div class="form-group">
+            <div class="form-group address-group">
                 <label>주소 <span class="required">*</span></label>
-                <button type="button" class="btn btn-sub" id="addressBtn">주소 검색</button>
-                <input type="text" th:field="*{address1}" id="roadAddress">
-                <input type="text" th:field="*{address2}" placeholder="상세 주소">
+                <div class="inline-group">
+                    <input type="text" th:field="*{address1}" id="roadAddress" readonly placeholder="주소 검색을 눌러주세요">
+                    <button type="button" class="btn btn-sub" id="addressBtn">주소 검색</button>
+                </div>
+                <input type="text" th:field="*{address2}" placeholder="상세 주소를 입력해주세요" class="addr-detail">
                 <p class="fieldError" th:errors="*{address1}"></p>
             </div>
 
