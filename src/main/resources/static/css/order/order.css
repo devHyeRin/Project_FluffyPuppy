@@ -63,7 +63,6 @@
 .order-item-box {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 2rem;
     padding: 1.5rem 0;
 }
@@ -82,9 +81,10 @@
 }
 
 .order-item-info {
-    flex: 0 1 auto;
+    flex: 1;
     text-align: left;
-    min-width: 200px;
+    overflow: hidden;
+    padding-right: 1rem;
 }
 
 .order-item-name {
