@@ -3,24 +3,78 @@
    ========================= */
 
 .footer {
-    background-color: #f4f4f4;
-    padding: 3rem 0;
-    margin-top: 6rem;
+    background-color: #f9f9f9;
+    padding: 4rem 0;
+    margin-top: 8rem;
     font-size: 1.3rem;
-    color: #666;
+    color: #777;
+    border-top: 1px solid #eee;
 }
 
-.footer-color {
+.footer-container {
     width: 135rem;
     margin: 0 auto;
-
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.footer p {
-    line-height: 1.6;
+.footer-company-name {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.footer-info p {
+    line-height: 1.8;
+}
+
+.copyright {
+    display: block;
+    margin-top: 1rem;
+    color: #bbb;
+    font-size: 1.2rem;
+}
+
+.footer-customer {
+    text-align: right;
+}
+
+.cs-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d27878; /* 브랜드 포인트 컬러 */
+    margin-bottom: 0.5rem;
+}
+
+.footer-links {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: #d27878;
+}
+
+.highlight-link {
+    font-weight: 600;
+    color: #444 !important;
+}
+
+.footer-links .divider {
+    width: 1px;
+    height: 1rem;
+    background-color: #ddd;
 }
 
 /* =========================
@@ -28,21 +82,32 @@
    ========================= */
 
 @media (max-width: 1279px) {
-    .footer-color {
+    .footer-container {
         width: 100%;
-        padding: 0 2rem;
+        padding: 0 4rem;
     }
 }
 
 @media (max-width: 767px) {
     .footer {
-        padding: 2.4rem 0;
+        padding: 3rem 0;
+        text-align: center;
     }
 
-    .footer-color {
+    .footer-container {
         flex-direction: column;
-        gap: 2rem;
-        align-items: flex-start;
-        padding: 0 1.6rem;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .footer-customer {
+        text-align: center;
+        border-top: 1px solid #eee;
+        padding-top: 2rem;
+        width: 100%;
+    }
+
+    .footer-links {
+        justify-content: center;
     }
 }

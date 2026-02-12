@@ -1,18 +1,26 @@
 <footer th:fragment="footer" class="footer">
-    <div class="footer-color">
-        <div>
+    <div class="footer-container">
+        <div class="footer-info">
+            <p class="footer-company-name">플러피퍼피 (FLUFFY PUPPY)</p>
             <p>
-                상호 : 플러피퍼피(FLUFFY PUPPY)<br>
-                대표 : 이혜린<br>
-                주소 : 서울시 송파구 송파대로 624<br>
-                (C)플러피퍼피 All Rights Reserved
+                대표 : 이혜린 | 주소 : 서울시 송파구 송파대로 624<br>
+                <span class="copyright">© FLUFFY PUPPY All Rights Reserved.</span>
             </p>
         </div>
-        <div>
-            <p>
-                고객센터 TEL ) 02-2307-1111<br>
-                평일 : 10:00 ~ 18:00
-            </p>
+
+        <div class="footer-customer">
+            <div class="customer-center">
+                <p class="cs-title">고객센터 02-2307-1111</p>
+                <p>평일 10:00 ~ 18:00 (주말/공휴일 휴무)</p>
+            </div>
+
+            <div class="footer-links">
+                <a th:href="@{/notices}" class="highlight-link">공지사항</a>
+                <span class="divider"></span>
+                <a href="#">이용약관</a>
+                <span class="divider"></span>
+                <a href="#">개인정보처리방침</a>
+            </div>
         </div>
     </div>
 </footer>

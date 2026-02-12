@@ -23,43 +23,42 @@
 
             <!-- PC 전용 상단 메뉴 -->
             <ul class="myInfo pc-only">
-                <li class="top"><a th:href="@{/notices}">공지사항</a></li>
-
-                <li sec:authorize="isAuthenticated()" class="top">
-                    <a th:href="@{/cart}">장바구니</a>
+                <li sec:authorize="isAuthenticated()" class="top cart-wrapper">
+                    <a th:href="@{/cart}" class="icon-link">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span id="cart-count" class="cart-badge">0</span>
+                    </a>
                 </li>
-                <li sec:authorize="isAuthenticated()" class="top">
-                    <a th:href="@{/members/mypage}">마이페이지</a>
+
+                <li sec:authorize="isAuthenticated()" class="top dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">마이페이지 <span class="arrow-down">▼</span></a>
+                    <ul class="dropdown-content">
+                        <li><a th:href="@{/members/mypage}">내 정보 수정</a></li>
+                        <li><a th:href="@{/orders}">주문 내역</a></li>
+                        <li><a th:href="@{/members/logout}">로그아웃</a></li>
+                    </ul>
                 </li>
 
                 <li sec:authorize="isAnonymous()" class="top">
                     <a th:href="@{/members/login}">로그인</a>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="top">
-                    <a th:href="@{/members/logout}">로그아웃</a>
                 </li>
             </ul>
 
         </div>
 
         <ul class="headerCategory">
-            <li class="mobile-only">
-                <a th:href="@{/notices}">공지사항</a>
-            </li>
-
-            <li class="mobile-only" sec:authorize="isAuthenticated()">
-                <a th:href="@{/cart}">장바구니</a>
-            </li>
-            <li class="mobile-only" sec:authorize="isAuthenticated()">
-                <a th:href="@{/members/mypage}">마이페이지</a>
-            </li>
-
             <li class="mobile-only" sec:authorize="isAnonymous()">
-                <a th:href="@{/members/login}">로그인</a>
+                <a th:href="@{/members/login}" class="mobile-login-btn">로그인 / 회원가입</a>
             </li>
 
             <li class="mobile-only" sec:authorize="isAuthenticated()">
-                <a th:href="@{/members/logout}">로그아웃</a>
+                <div class="mobile-user-info">
+                    <strong>마이페이지</strong>
+                    <a th:href="@{/members/mypage}">내 정보 수정</a>
+                    <a th:href="@{/orders}">주문 내역</a>
+                    <a th:href="@{/cart}">장바구니 (<span id="mobile-cart-count">0</span>)</a>
+                    <a th:href="@{/members/logout}" class="logout-text">로그아웃</a>
+                </div>
             </li>
 
             <li class="mobile-only divider"></li>
