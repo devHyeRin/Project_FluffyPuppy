@@ -1,28 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
     const hamburgerBtn = document.querySelector(".hamburger-btn");
     const menu = document.querySelector(".headerCategory");
+    const cartBadges = document.querySelectorAll("#cart-count, #mobile-cart-count");
 
-    if (!hamburgerBtn || !menu) return;
+    initMenu();
+    updateCartCount();
 
-    // 햄버거 버튼 클릭 → 메뉴 열기/닫기
-    hamburgerBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
+    // [메뉴 함수]
+    function initMenu() {
+        if (!hamburgerBtn || !menu) return;
 
-        const isOpen = menu.classList.toggle("open");
-        document.body.style.overflow = isOpen ? "hidden" : "";
-        hamburgerBtn.setAttribute("aria-expanded", isOpen);
-    });
+        hamburgerBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isOpen = menu.classList.toggle("open");
+            document.body.style.overflow = isOpen ? "hidden" : "";
+            hamburgerBtn.setAttribute("aria-expanded", isOpen);
+        });
 
-    // 메뉴 바깥 클릭 시 닫기
-    document.addEventListener("click", (e) => {
-        if (
-            menu.classList.contains("open") &&
-            !menu.contains(e.target) &&
-            !hamburgerBtn.contains(e.target)
-        ) {
-            menu.classList.remove("open");
-            document.body.style.overflow = "";
-            hamburgerBtn.setAttribute("aria-expanded", "false");
+        document.addEventListener("click", (e) => {
+            if (menu.classList.contains("open") && !menu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                closeMenu();
+            }
+        });
+    }
+
+    function closeMenu() {
+        menu.classList.remove("open");
+        document.body.style.overflow = "";
+        hamburgerBtn.setAttribute("aria-expanded", "false");
+    }
+
+    // [장바구니 함수]
+    async function updateCartCount() {
+        try {
+            const response = await fetch('/cart/count');
+            if (response.ok) {
+                const count = await response.json();
+
+                cartBadges.forEach(badge => {
+                    badge.textContent = count;
+                    badge.style.display = count > 0 ? "flex" : "none";
+                });
+            }
+        } catch (error) {
+            console.error("장바구니 수량을 가져오는데 실패했습니다:", error);
         }
-    });
+    }
+
+    window.refreshCartCount = updateCartCount;
 });

@@ -88,6 +88,25 @@ public class CartController {
         }
     }
 
+    /* 장바구니 수량 조회 */
+    @GetMapping("/cart/count")
+    public @ResponseBody ResponseEntity<Integer> getCartCount(Authentication authentication) {
+        String email = getEmailByAuthentication(authentication);
+
+        if (email == null) {
+            return new ResponseEntity<>(0, HttpStatus.OK);
+        }
+
+        try {
+            List<CartDetailDto> cartDetailList = cartService.getCartList(email);
+            int totalCount = cartDetailList.size();
+
+            return new ResponseEntity<>(totalCount, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(0, HttpStatus.OK);
+        }
+    }
+
     /* 장바구니 수량 수정 */
     @PatchMapping("/cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity<?> updateCartItem(
@@ -152,7 +171,11 @@ public class CartController {
             }
         }
 
-        Long orderId = cartService.orderCartItem(cartOrderDtoList, email);
-        return new ResponseEntity<>(orderId, HttpStatus.OK);
+        try {
+            Long orderId = cartService.orderCartItem(cartOrderDtoList, email);
+            return new ResponseEntity<>(orderId, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
