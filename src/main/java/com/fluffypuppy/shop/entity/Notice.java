@@ -1,18 +1,19 @@
 package com.fluffypuppy.shop.entity;
 
 import com.fluffypuppy.shop.dto.NoticeFormDto;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="notice")
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Notice extends BaseEntity{
+
     @Id
     @Column(name="notice_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,9 @@ public class Notice extends BaseEntity{
     @Column(nullable = false)
     private String noticeContent;
 
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<NoticeImg> noticeImgs = new ArrayList<>();
 
     public void updateNotice(NoticeFormDto noticeFormDto){
         this.noticeTitle = noticeFormDto.getNoticeTitle();
