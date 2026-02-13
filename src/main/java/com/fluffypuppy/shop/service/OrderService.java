@@ -1,8 +1,7 @@
 package com.fluffypuppy.shop.service;
 
-import com.fluffypuppy.shop.dto.OrderDto;
+import com.fluffypuppy.shop.dto.OrderRequestDto;
 import com.fluffypuppy.shop.dto.OrderHistDto;
-import com.fluffypuppy.shop.dto.OrderItemDto;
 import com.fluffypuppy.shop.entity.*;
 import com.fluffypuppy.shop.repository.ItemImgRepository;
 import com.fluffypuppy.shop.repository.ItemRepository;
@@ -30,7 +29,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
 
-    public Long order(OrderDto orderDto, String email) {
+    public Long order(OrderRequestDto orderDto, String email) {
 
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
@@ -64,8 +63,8 @@ public class OrderService {
                 ItemImg itemImg = itemImgRepository
                         .findByItemIdAndRepImgYn(orderItem.getItem().getId(), "Y");
 
-                OrderItemDto orderItemDto =
-                        new OrderItemDto(orderItem, itemImg.getImgUrl());
+                OrderHistDto.OrderItemDto orderItemDto =
+                        new OrderHistDto.OrderItemDto(orderItem, itemImg.getImgUrl());
 
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
@@ -95,14 +94,14 @@ public class OrderService {
         order.cancelOrder();
     }
 
-    public Long orders(List<OrderDto> orderDtoList, String email) {
+    public Long orders(List<OrderRequestDto> orderDtoList, String email) {
 
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
 
         List<OrderItem> orderItemList = new ArrayList<>();
 
-        for (OrderDto orderDto : orderDtoList) {
+        for (OrderRequestDto orderDto : orderDtoList) {
             Item item = itemRepository.findById(orderDto.getItemId())
                     .orElseThrow(EntityNotFoundException::new);
 

@@ -3,7 +3,7 @@ package com.fluffypuppy.shop.service;
 import com.fluffypuppy.shop.dto.CartDetailDto;
 import com.fluffypuppy.shop.dto.CartItemDto;
 import com.fluffypuppy.shop.dto.CartOrderDto;
-import com.fluffypuppy.shop.dto.OrderDto;
+import com.fluffypuppy.shop.dto.OrderRequestDto;
 import com.fluffypuppy.shop.entity.Cart;
 import com.fluffypuppy.shop.entity.CartItem;
 import com.fluffypuppy.shop.entity.Item;
@@ -105,13 +105,13 @@ public class CartService {
     /* 장바구니 상품 주문 */
     public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email) {
 
-        List<OrderDto> orderDtoList = new ArrayList<>();
+        List<OrderRequestDto> orderDtoList = new ArrayList<>();
 
         for (CartOrderDto cartOrderDto : cartOrderDtoList) {
             CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId())
                     .orElseThrow(() -> new EntityNotFoundException("장바구니 상품을 찾을 수 없습니다."));
 
-            OrderDto orderDto = new OrderDto();
+            OrderRequestDto orderDto = new OrderRequestDto();
             orderDto.setItemId(cartItem.getItem().getId());
             orderDto.setCount(cartItem.getCount());
             orderDtoList.add(orderDto);

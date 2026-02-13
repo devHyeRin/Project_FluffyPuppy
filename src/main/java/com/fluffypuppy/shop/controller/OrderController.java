@@ -1,6 +1,6 @@
 package com.fluffypuppy.shop.controller;
 
-import com.fluffypuppy.shop.dto.OrderDto;
+import com.fluffypuppy.shop.dto.OrderRequestDto;
 import com.fluffypuppy.shop.dto.OrderHistDto;
 import com.fluffypuppy.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping(value = "/order")
-    public @ResponseBody ResponseEntity order (@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult, Principal principal){
+    public @ResponseBody ResponseEntity order (@RequestBody @Valid OrderRequestDto orderDto, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
