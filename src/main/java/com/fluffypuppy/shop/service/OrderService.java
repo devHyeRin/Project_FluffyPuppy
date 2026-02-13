@@ -1,8 +1,7 @@
 package com.fluffypuppy.shop.service;
 
-import com.fluffypuppy.shop.dto.OrderDto;
+import com.fluffypuppy.shop.dto.OrderRequestDto;
 import com.fluffypuppy.shop.dto.OrderHistDto;
-import com.fluffypuppy.shop.dto.OrderItemDto;
 import com.fluffypuppy.shop.entity.*;
 import com.fluffypuppy.shop.repository.ItemImgRepository;
 import com.fluffypuppy.shop.repository.ItemRepository;
@@ -18,7 +17,9 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -30,17 +31,29 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
 
-    public Long order(OrderDto orderDto, String email) {
+    //단건 주문
+    public Long order(OrderRequestDto orderDto, String email) {
 
-        Item item = itemRepository.findById(orderDto.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
+        List<OrderRequestDto> orderDtoList = new ArrayList<>();
+        orderDtoList.add(orderDto);
+        return orders(orderDtoList, email);
+    }
+
+    //다건 주문
+    public Long orders(List<OrderRequestDto> orderDtoList, String email) {
 
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
 
         List<OrderItem> orderItemList = new ArrayList<>();
-        OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
-        orderItemList.add(orderItem);
+
+        for (OrderRequestDto orderDto : orderDtoList) {
+            Item item = itemRepository.findById(orderDto.getItemId())
+                    .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다. ID: " + orderDto.getItemId()));
+
+            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+            orderItemList.add(orderItem);
+        }
 
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
@@ -48,25 +61,39 @@ public class OrderService {
         return order.getId();
     }
 
-    /* 주문 목록 조회 */
+    //주문 목록 조회
     @Transactional(readOnly = true)
     public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
 
         List<Order> orders = orderRepository.findOrders(email, pageable);
         Long totalCount = orderRepository.countOrder(email);
 
-        List<OrderHistDto> orderHistDtos = new ArrayList<>();
+        List<Long> itemIds = new ArrayList<>();
+        for (Order order : orders) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Long itemId = orderItem.getItem().getId();
+                if (!itemIds.contains(itemId)) {
+                    itemIds.add(itemId);
+                }
+            }
+        }
 
+        Map<Long, String> itemImgMap = new HashMap<>();
+        if (!itemIds.isEmpty()) {
+            List<ItemImg> itemImgList = itemImgRepository.findByItemIdInAndRepImgYn(itemIds, "Y");
+
+            for (ItemImg itemImg : itemImgList) {
+                itemImgMap.put(itemImg.getItem().getId(), itemImg.getImgUrl());
+            }
+        }
+
+        List<OrderHistDto> orderHistDtos = new ArrayList<>();
         for (Order order : orders) {
             OrderHistDto orderHistDto = new OrderHistDto(order);
 
             for (OrderItem orderItem : order.getOrderItems()) {
-                ItemImg itemImg = itemImgRepository
-                        .findByItemIdAndRepImgYn(orderItem.getItem().getId(), "Y");
-
-                OrderItemDto orderItemDto =
-                        new OrderItemDto(orderItem, itemImg.getImgUrl());
-
+                String imgUrl = itemImgMap.get(orderItem.getItem().getId());
+                OrderHistDto.OrderItemDto orderItemDto = new OrderHistDto.OrderItemDto(orderItem, imgUrl);
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
             orderHistDtos.add(orderHistDto);
@@ -75,47 +102,22 @@ public class OrderService {
         return new PageImpl<>(orderHistDtos, pageable, totalCount);
     }
 
+    //주문 본인 확인
     @Transactional(readOnly = true)
     public boolean validateOrder(Long orderId, String email) {
 
-        Member curMember = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
-
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("주문 정보를 찾을 수 없습니다."));
 
-        Member savedMember = order.getMember();
-
-        return StringUtils.equals(curMember.getEmail(), savedMember.getEmail());
+        return StringUtils.equals(email, order.getMember().getEmail());
     }
 
+    //주문 취소
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("취소할 주문이 존재하지 않습니다."));
+
         order.cancelOrder();
-    }
-
-    public Long orders(List<OrderDto> orderDtoList, String email) {
-
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
-
-        List<OrderItem> orderItemList = new ArrayList<>();
-
-        for (OrderDto orderDto : orderDtoList) {
-            Item item = itemRepository.findById(orderDto.getItemId())
-                    .orElseThrow(EntityNotFoundException::new);
-
-            OrderItem orderItem =
-                    OrderItem.createOrderItem(item, orderDto.getCount());
-
-            orderItemList.add(orderItem);
-        }
-
-        Order order = Order.createOrder(member, orderItemList);
-        orderRepository.save(order);
-
-        return order.getId();
     }
 }
 

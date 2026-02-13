@@ -1,0 +1,156 @@
+.order-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+}
+
+/* 제목 영역 */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    border-bottom: 2px solid #333;
+    padding-bottom: 1.5rem;
+}
+
+.order-header h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.breadcrumb {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    font-size: 1.4rem;
+    color: #888;
+}
+
+/* 테이블 스타일 */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    word-break: break-all;
+}
+
+.order-table thead tr {
+    border-bottom: 1px solid #eee;
+}
+
+.order-table th {
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    background-color: #fafafa;
+    color: #555;
+    text-align: center;
+}
+
+.order-table td {
+    padding: 2rem 1.5rem;
+    border-bottom: 1px solid #f2f2f2;
+    vertical-align: middle;
+    font-size: 1.4rem;
+}
+
+/* 텍스트 정렬 유틸리티 */
+.text-center { text-align: center; }
+
+/* 주문 상품 정보 (이미지 + 텍스트) */
+.order-item-box {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 0;
+}
+
+.order-item-box:not(:last-child) {
+    border-bottom: 1px dashed #f1f1f1;
+}
+
+.order-item-box img {
+    width: 7.5rem;
+    height: 7.5rem;
+    object-fit: cover;
+    border-radius: 0.6rem;
+    flex-shrink: 0;
+    border: 1px solid #f0f0f0;
+}
+
+.order-item-info {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    padding-right: 1rem;
+}
+
+.order-item-name {
+    display: block;
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.order-item-meta {
+    color: #666;
+    font-size: 1.4rem;
+}
+
+.total-price-text {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #f59898;
+}
+
+/* 상태 및 버튼 */
+.status-badge {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.status-cancelled {
+    color: #ff4d4d;
+}
+
+.cancel-date {
+    display: block;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.btn-cancel {
+    padding: 0.8rem 1.6rem;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    border: 1px solid #d27878;
+    background: #fff;
+    color: #d27878;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background: #d27878;
+    color: #fff;
+}
+
+.no-data {
+    padding: 10rem 0;
+    text-align: center;
+    font-size: 1.6rem;
+    color: #999;
+}
+
+.pagination-container {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}

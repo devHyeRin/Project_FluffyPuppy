@@ -2,6 +2,7 @@ package com.fluffypuppy.shop.dto;
 
 import com.fluffypuppy.shop.constant.OrderStatus;
 import com.fluffypuppy.shop.entity.Order;
+import com.fluffypuppy.shop.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,29 +15,37 @@ import java.util.List;
 @Setter
 public class OrderHistDto {
     private Long orderId;
-
     private String orderDate;
-
     private OrderStatus orderStatus;
-
     private List<OrderItemDto> orderItemDtoList = new ArrayList<>();
-
     private LocalDateTime cancelDate;
-
     private int totalPrice;
 
 
     public OrderHistDto(Order order){
         this.orderId = order.getId();
-        this.orderDate = order.getOrderDate()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.orderDate = order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.orderStatus = order.getOrderStatus();
+        this.totalPrice = order.getTotalPrice();
 
         if (order.getOrderStatus().isCancelled()) {
-            this.cancelDate = order.getUpdateTime(); // UpdateTime 컬럼을 주문 취소 날짜로 설정
+            this.cancelDate = order.getUpdateTime();
         }
+    }
 
-        this.totalPrice = order.getTotalPrice();
+    @Getter @Setter
+    public static class OrderItemDto {
+        private String itemNm;
+        private int count;
+        private int orderPrice;
+        private String imgUrl;
+
+        public OrderItemDto(OrderItem orderItem, String imgUrl) {
+            this.itemNm = orderItem.getItem().getItemNm();
+            this.count = orderItem.getCount();
+            this.orderPrice = orderItem.getOrderPrice();
+            this.imgUrl = imgUrl;
+        }
     }
 
     public void addOrderItemDto(OrderItemDto orderItemDto){

@@ -4,8 +4,9 @@ import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.constant.ItemSellStatus;
 import com.fluffypuppy.shop.dto.ItemFormDto;
 import com.fluffypuppy.shop.exception.OutOfStockException;
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name="item")
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Item extends BaseEntity{
     @Id
@@ -26,7 +27,7 @@ public class Item extends BaseEntity{
     @Column(nullable = false, length = 50)
     private String itemNm;
 
-    @Column(name = "price", nullable = false)
+    @Column(nullable = false)
     private int price;
 
     @Column(nullable = false)
