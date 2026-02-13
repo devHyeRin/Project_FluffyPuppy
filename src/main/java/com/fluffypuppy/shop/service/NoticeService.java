@@ -75,13 +75,13 @@ public class NoticeService {
     /*공지사항(관리자) 데이터 조회*/
     @Transactional(readOnly = true)
     public Page<Notice> getAdminNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
-        return noticeRepository.getAdminNoticePage(noticeSearchDto, pageable);
+        return noticeRepository.getNoticePage(noticeSearchDto, pageable);
     }
 
     /*공지사항(사용자) 데이터 조회*/
     @Transactional(readOnly = true)
     public Page<Notice> getUserNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
-        return noticeRepository.getUserNoticePage(noticeSearchDto, pageable);
+        return noticeRepository.getNoticePage(noticeSearchDto, pageable);
     }
 
 }
