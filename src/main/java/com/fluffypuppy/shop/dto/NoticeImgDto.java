@@ -1,7 +1,6 @@
 package com.fluffypuppy.shop.dto;
 
 
-import com.fluffypuppy.shop.entity.ItemImg;
 import com.fluffypuppy.shop.entity.NoticeImg;
 import lombok.Getter;
 import lombok.Setter;

@@ -105,7 +105,7 @@ public class NoticeController {
     /*사용자 공지사항 id별 조회*/
     @GetMapping(value = "/notices/notice/{noticeId}")
     public String noticeUserDtl(Model model, @PathVariable("noticeId") Long noticeId) {
-        NoticeFormDto noticeFormDto = noticeService.getUserNoticeDtl(noticeId);
+        NoticeFormDto noticeFormDto = noticeService.getNoticeDtl(noticeId);
         model.addAttribute("notice", noticeFormDto);
         return "notice/noticeDtl";
     }

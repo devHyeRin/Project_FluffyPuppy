@@ -26,6 +26,12 @@ public class NoticeImg extends BaseEntity{
         this.notice = notice;
     }
 
+    public static NoticeImg createNoticeImg(Notice notice) {
+        NoticeImg noticeImg = new NoticeImg();
+        noticeImg.setNotice(notice);
+        return noticeImg;
+    }
+
     public void updateNoticeImg(String oriImgName, String imgName, String imgUrl){
         this.oriImgName = oriImgName;
         this.imgName = imgName;
