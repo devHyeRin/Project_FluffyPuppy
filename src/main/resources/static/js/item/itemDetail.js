@@ -40,7 +40,7 @@ function addCart(){
             if(confirm("상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?")){
                 location.href='/cart';
             } else {
-                location.href='/';
+                return;
             }
         },
         error : function(jqXHR){

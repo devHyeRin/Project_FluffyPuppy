@@ -45,8 +45,7 @@ async function cancelOrder(orderId) {
             headers: {
                 "Content-Type": "application/json",
                 [header]: token
-            },
-            body: JSON.stringify({ orderId: orderId })
+            }
         });
 
         if (response.ok) {
