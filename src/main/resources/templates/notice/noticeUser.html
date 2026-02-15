@@ -26,11 +26,6 @@
   </div>
 
   <div class="notice-search-wrapper" th:object="${noticeSearchDto}">
-    <select th:field="*{searchDateType}" class="search-select">
-      <option value="all">전체기간</option>
-      <option value="1m">1개월</option>
-      <option value="6m">6개월</option>
-    </select>
     <select th:field="*{searchBy}" class="search-select">
       <option value="noticeTitle">제목</option>
       <option value="author">작성자</option>
@@ -50,7 +45,8 @@
         </div>
       </div>
     </div>
-    <div th:if="${#lists.isEmpty(notices.getContent())}" class="col-12 text-center py-5">
+    <div th:if="${#lists.isEmpty(notices.getContent())}" class="empty-notice">
+      <span class="material-symbols-outlined">info</span>
       <p>등록된 공지사항이 없습니다.</p>
     </div>
   </div>

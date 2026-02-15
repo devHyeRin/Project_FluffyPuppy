@@ -30,10 +30,9 @@ const NoticeUI = {
     },
 
     movePage(page) {
-        const searchDateType = document.querySelector("#searchDateType").value;
         const searchBy = document.querySelector("#searchBy").value;
         const searchQuery = document.querySelector("#searchQuery").value;
 
-        location.href = `/notices/${page}?searchDateType=${searchDateType}&searchBy=${searchBy}&searchQuery=${searchQuery}`;
+        location.href = `/notices/${page}?searchBy=${searchBy}&searchQuery=${searchQuery}`;
     }
 };
