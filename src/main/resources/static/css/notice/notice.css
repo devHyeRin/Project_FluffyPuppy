@@ -1,8 +1,8 @@
 /* 공지사항 전체 컨테이너 */
 .notice-container {
-    max-width: 1200px; /* 더 넓은 레이아웃 */
-    margin: 50px auto;
-    padding: 0 20px;
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
 }
 
 /* 제목 영역 */
@@ -11,7 +11,7 @@
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 4rem;
-    border-bottom: 2px solid #333;
+    border-bottom: 0.2rem solid #333;
     padding-bottom: 1.5rem;
 }
 
@@ -21,7 +21,7 @@
     margin: 0;
 }
 
-.breadcrumb {
+.notice-container .breadcrumb {
     display: flex;
     gap: 0.8rem;
     align-items: center;
@@ -29,64 +29,69 @@
     color: #888;
 }
 
-/* 검색 바 리디자인 */
+/* 검색 바 */
 .notice-search-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin: 20px 0 30px;
-    gap: 10px;
+    margin: 2rem 0 3rem;
+    gap: 1rem;
 }
 
-.search-select, .search-input {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 6px 12px;
+.notice-container .search-select,
+.notice-container .search-input {
+    border: 0.1rem solid #ddd;
+    border-radius: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.4rem;
 }
 
 .btn-notice-search {
     background-color: #f8d7da;
-    border: 1px solid #f8d7da;
+    border: 0.1rem solid #f8d7da;
     color: white;
-    padding: 6px 20px;
-    border-radius: 4px;
+    padding: 0.6rem 2rem;
+    border-radius: 0.4rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .btn-notice-search:hover {
     background-color: #f1b0b7;
 }
 
-/* --- 공지사항 카드 그리드 레이아웃 --- */
+/* 카드 그리드 레이아웃 */
 .notice-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3열 고정 또는 반응형 */
-    gap: 25px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
 }
 
 .notice-card {
     background: #fff;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    border: 1px solid #f1f1f1;
+    border-radius: 1.2rem;
+    padding: 2.5rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.05);
+    border: 0.1rem solid #f1f1f1;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .notice-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-0.5rem);
 }
 
 .notice-card-body {
-    padding: 20px;
+    padding: 0 2rem 1rem 2rem;
 }
 
 .notice-card-title {
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
     line-height: 1.4;
-    max-height: 2.8em; /* 두 줄까지 표시 */
+    max-height: 2.8em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -97,92 +102,82 @@
 .notice-card-meta {
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    font-size: 1.3rem;
     color: #777;
-    margin-top: 15px;
-    border-top: 1px dashed #eee;
-    padding-top: 15px;
+    margin-top: 1.5rem;
+    border-top: 0.1rem dashed #eee;
+    padding-top: 1.5rem;
 }
 
 .notice-card-author, .notice-card-date {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 /* 아이콘 스타일 */
 .notice-card-meta .material-symbols-outlined {
-    font-size: 16px;
-    color: #f8d7da; /* 포인트 컬러 아이콘 */
+    font-size: 1.6rem;
+    color: #f8d7da;
 }
 
-/* 페이징 디자인 (기존과 동일하게 유지 가능) */
-.pagination-container {
-    margin: 50px 0;
+/* 페이징 디자인 */
+.notice-container .pagination-container {
+    margin: 5rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* 부트스트랩 기본 스타일 초기화 및 재정의 */
-.pagination {
-    display: flex !important;
+.notice-container .pagination {
+    display: flex;
     padding-left: 0;
     list-style: none;
-    border-radius: 0.25rem;
-    gap: 10px; /* 버튼 사이 간격 */
+    gap: 1rem;
 }
 
-.page-item {
-    /* 부트스트랩 기본 margin 제거 */
-    margin: 0 !important;
+.notice-container .page-item {
+    margin: 0;
 }
 
-.page-link {
-    /* 중요: 인라인 스타일이 아닌 flex로 중앙 정렬 */
-    display: flex !important;
+.notice-container .page-link {
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    /* 완벽한 정원을 위한 고정 수치 */
-    width: 40px !important;
-    height: 40px !important;
-    padding: 0 !important; /* 부트스트랩 기본 패딩 제거 */
-
-    border-radius: 50% !important; /* 100% 원형 */
-    border: 1px solid #ddd !important;
-    background-color: #fff !important;
-    color: #888 !important;
-    font-size: 14px;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 0.1rem solid #ddd;
+    background-color: #fff;
+    color: #888;
+    font-size: 1.4rem;
     font-weight: 500;
     transition: all 0.2s ease-in-out;
+    text-decoration: none;
 }
 
-/* 호버 및 활성화 상태 */
-.page-link:hover {
-    background-color: #f8d7da !important;
-    color: #fff !important;
-    border-color: #f8d7da !important;
-    transform: translateY(-2px);
+.notice-container .page-link:hover {
+    background-color: #f8d7da;
+    color: #fff;
+    border-color: #f8d7da;
+    transform: translateY(-0.2rem);
 }
 
-.page-item.active .page-link {
-    background-color: #d2a7ac !important;
-    color: #fff !important;
-    border-color: #d2a7ac !important;
-    z-index: 3;
+.notice-container .page-item.active .page-link {
+    background-color: #d2a7ac;
+    color: #fff;
+    border-color: #d2a7ac;
 }
 
-/* 비활성화(이전/다음 버튼 없을 때) */
-.page-item.disabled .page-link {
-    color: #eee !important;
+.notice-container .page-item.disabled .page-link {
+    color: #eee;
     pointer-events: none;
-    background-color: #fff !important;
-    border-color: #eee !important;
+    background-color: #fff;
+    border-color: #eee;
 }
 
-/* 기호(«, ») 미세 위치 조정 */
-.page-link span {
+.notice-container .page-link span {
     display: block;
-    transform: translateY(-1px);
+    transform: translateY(-0.1rem);
 }
