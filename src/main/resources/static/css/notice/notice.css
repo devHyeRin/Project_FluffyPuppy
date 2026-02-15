@@ -1,0 +1,36 @@
+.mng_wrap .h2 span {
+    border-bottom: 5px solid pink;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notice-search-box {
+    float: right;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.notice-search-box select,
+.notice-search-box input {
+    width: auto;
+}
+
+.btn-search {
+    background: #d2a7ac;
+    border: 1px solid white;
+    color: white;
+}
+
+.btn-search:hover {
+    background: #c1969b;
+}
+
+.pagination-container {
+    margin-top: 30px;
+}
+
+.page-link {
+    cursor: pointer;
+}

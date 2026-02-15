@@ -2,42 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-<!-- 사용자 스크립트 추가 -->
-<th:block layout:fragment="script">
-  <script th:inline="javascript">
-    $(document).ready(function(){
-      $("#searchBtn").on("click",function(e){
-        e.preventDefault(); //검색버튼 클릭시 form 태그 전송을 막습니다.
-        page(0);
-      });
-    });
 
-    function page(page){
-      var searchDateType = $("#searchDateType").val();
-      var searchBy = $("#searchBy").val();
-      var searchQuery = $("#searchQuery").val();
-
-      location.href="/notices/" + page + "?searchDateType=" + searchDateType
-              + "&searchBy=" + searchBy + "&searchQuery=" + searchQuery;
-    }
-  </script>
+<th:block layout:fragment="css">
+  <link rel="stylesheet" th:href="@{/css/notice/notice.css}">
 </th:block>
 
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-  <style>
-    select{
-      margin-right : 10px
-    }
-  </style>
+<th:block layout:fragment="script">
+  <script th:src="@{/js/notice/noticeUser.js}"></script>
 </th:block>
 
 <div layout:fragment="content">
   <div class="mng_wrap">
-  <form th:action="@{'/notices/notice/'+${notices.number}}" role="form" method="get" th:object="${notices}">
-    <div style="display: flex; justify-content: space-between">
-      <p class="h2"><span style="border-bottom: 5px solid pink">공지사항<span class="material-symbols-outlined">notifications</span></span></p>
-      <ul style="margin: 0;">
+    <div class="notice-header" style="display: flex; justify-content: space-between">
+      <h2 class="h2"><span>공지사항<span class="material-symbols-outlined">notifications</span></span></h2>
+      <ul class="breadcrumb" style="display: flex; list-style: none; gap: 5px;">
         <li><a href="/"><span class="material-symbols-outlined">home</span></a></li>
         <li><span class="material-symbols-outlined">arrow_forward_ios</span></li>
         <li>공지사항</li>
@@ -45,20 +23,20 @@
     </div>
     <hr>
 
-    <div class="form-inline justify-content-center" th:object="${noticeSearchDto}" style="float:right; margin-bottom: 20px;">
-      <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
+    <div class="notice-search-box" th:object="${noticeSearchDto}">
+      <select th:field="*{searchDateType}" class="form-control">
         <option value="all">전체기간</option>
         <option value="1d">1일</option>
         <option value="1w">1주</option>
         <option value="1m">1개월</option>
         <option value="6m">6개월</option>
       </select>
-      <select th:field="*{searchBy}" class="form-control" style="width:auto;">
+      <select th:field="*{searchBy}" class="form-control">
         <option value="noticeTitle">제목</option>
         <option value="createdBy">등록자</option>
       </select>
       <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
-      <button id="searchBtn" type="submit" class="btn btn-primary" style="background: #d2a7ac; border: 1px solid white">검색</button>
+      <button id="searchBtn" type="button" class="btn btn-search">검색</button>
     </div>
 
     <table class="table">
@@ -71,10 +49,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="notice, status : ${notices.getContent()}">
+      <tr th:each="notice : ${notices.getContent()}">
         <td th:text="${notice.id}"></td>
         <td>
-          <a th:href="'/notices/notice/'+${notice.id}" th:text="${notice.noticeTitle}"></a>
+          <a th:href="@{'/notice/' + ${notice.id}}" th:text="${notice.noticeTitle}"></a>
         </td>
         <td th:text="${notice.author}"></td>
         <td th:text="${#temporals.format(notice.createTime, 'yyyy-MM-dd HH:mm')}"></td>
@@ -82,25 +60,24 @@
       </tbody>
     </table>
 
-    <div th:with="start=${(notices.number/maxPage)*maxPage +1},
-        end=(${(notices.totalPages == 0) ? 1 : (start + (maxPage-1) < notices.totalPages ? start + (maxPage - 1) : notices.totalPages)})">
+    <div class="pagination-container"
+         th:with="start=${(notices.number/maxPage)*maxPage + 1},
+                  end=(${(notices.totalPages == 0) ? 1 : (start + (maxPage-1) < notices.totalPages ? start + (maxPage - 1) : notices.totalPages)})">
       <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${notices.first}?'disabled'">
-          <a th:onclick="'javascript:page('+${notices.number - 1} + ')'" aria-label='Previous' class="page-link">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
+        <li class="page-item" th:classappend="${notices.first} ? 'disabled'">
+          <a class="page-link" th:data-page="${notices.number - 1}" aria-label="Previous">&laquo;</a>
         </li>
-        <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}" th:classappend="${notices.number eq page-1}?'active':''">
-          <a th:onclick="'javascript:page('+${page -1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+
+        <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}"
+            th:classappend="${notices.number eq page - 1} ? 'active'">
+          <a class="page-link" th:data-page="${page - 1}" th:text="${page}"></a>
         </li>
-        <li class="page-item" th:classappend="${notices.last}?'disabled'">
-          <a th:onclick="'javascript:page(' + ${notices.number + 1} + ')'" aria-label="Next" class="page-link">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
+
+        <li class="page-item" th:classappend="${notices.last} ? 'disabled'">
+          <a class="page-link" th:data-page="${notices.number + 1}" aria-label="Next">&raquo;</a>
         </li>
       </ul>
     </div>
-  </form>
   </div>
 </div>
 </html>
