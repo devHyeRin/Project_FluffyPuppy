@@ -3,8 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const menu = document.querySelector(".headerCategory");
     const cartBadges = document.querySelectorAll("#cart-count, #mobile-cart-count");
 
+    const isLoggedIn = document.querySelector(".cart-wrapper") !== null;
+
     initMenu();
-    updateCartCount();
+
+    if (isLoggedIn) {
+        updateCartCount();
+    }
 
     // [메뉴 함수]
     function initMenu() {
@@ -32,8 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // [장바구니 함수]
     async function updateCartCount() {
+
+        if (!isLoggedIn) return;
+
         try {
             const response = await fetch('/cart/count');
+            if (response.status === 401) return;
+
             if (response.ok) {
                 const count = await response.json();
 
