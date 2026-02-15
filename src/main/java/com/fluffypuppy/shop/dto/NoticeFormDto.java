@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class NoticeFormDto {
     @NotBlank(message = "내용을 입력해주세요.")
     private String noticeContent;
 
+    private LocalDateTime createTime;
+
     private List<NoticeImgDto> noticeImgDtoList = new ArrayList<>();
 
     private List<Long> noticeImgIds = new ArrayList<>();
@@ -38,7 +41,10 @@ public class NoticeFormDto {
 
     //entity -> dto
     public static NoticeFormDto of(Notice notice){
-        return modelMapper.map(notice, NoticeFormDto.class);
+        NoticeFormDto noticeFormDto = modelMapper.map(notice, NoticeFormDto.class);
+        noticeFormDto.setCreateTime(notice.getCreateTime());
+
+        return noticeFormDto;
     }
 
 
