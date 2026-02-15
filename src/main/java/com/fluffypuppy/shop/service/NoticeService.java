@@ -71,16 +71,9 @@ public class NoticeService {
         return notice.getId();
     }
 
-
-    /*공지사항(관리자) 데이터 조회*/
+    /* 공지사항 목록 데이터 조회 (관리자/사용자 공용) */
     @Transactional(readOnly = true)
-    public Page<Notice> getAdminNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
-        return noticeRepository.getNoticePage(noticeSearchDto, pageable);
-    }
-
-    /*공지사항(사용자) 데이터 조회*/
-    @Transactional(readOnly = true)
-    public Page<Notice> getUserNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
+    public Page<Notice> getNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
         return noticeRepository.getNoticePage(noticeSearchDto, pageable);
     }
 
