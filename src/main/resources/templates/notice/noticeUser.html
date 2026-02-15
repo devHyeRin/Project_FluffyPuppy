@@ -11,73 +11,67 @@
   <script th:src="@{/js/notice/noticeUser.js}"></script>
 </th:block>
 
-<div layout:fragment="content">
-  <div class="mng_wrap">
-    <div class="notice-header" style="display: flex; justify-content: space-between">
-      <h2 class="h2"><span>공지사항<span class="material-symbols-outlined">notifications</span></span></h2>
-      <ul class="breadcrumb" style="display: flex; list-style: none; gap: 5px;">
-        <li><a href="/"><span class="material-symbols-outlined">home</span></a></li>
-        <li><span class="material-symbols-outlined">arrow_forward_ios</span></li>
-        <li>공지사항</li>
-      </ul>
+<div layout:fragment="content" class="notice-container">
+  <div class="notice-header">
+    <h2 class="notice-title">
+      공지사항
+      <span class="material-symbols-outlined">info</span>
+    </h2>
+
+    <ul class="breadcrumb">
+      <li><a href="/"><span class="material-symbols-outlined">home</span></a></li>
+      <li><span class="material-symbols-outlined">arrow_forward_ios</span></li>
+      <li>공지사항</li>
+    </ul>
+  </div>
+
+  <div class="notice-search-wrapper" th:object="${noticeSearchDto}">
+    <select th:field="*{searchDateType}" class="search-select">
+      <option value="all">전체기간</option>
+      <option value="1m">1개월</option>
+      <option value="6m">6개월</option>
+    </select>
+    <select th:field="*{searchBy}" class="search-select">
+      <option value="noticeTitle">제목</option>
+      <option value="author">작성자</option>
+    </select>
+    <input th:field="*{searchQuery}" type="text" placeholder="검색어를 입력해주세요" class="search-input">
+    <button id="searchBtn" type="button" class="btn-notice-search">검색</button>
+  </div>
+
+  <div class="notice-grid">
+    <div class="notice-card" th:each="notice : ${notices.getContent()}"
+         th:onclick="|location.href='@{'/notice/' + ${notice.id}}'|">
+      <div class="notice-card-body">
+        <h3 class="notice-card-title" th:text="${notice.noticeTitle}">공지사항 제목</h3>
+        <div class="notice-card-meta">
+          <span class="meta-item"><span class="material-symbols-outlined">person</span> <span th:text="${notice.author}">관리자</span></span>
+          <span class="meta-item"><span class="material-symbols-outlined">calendar_today</span> <span th:text="${#temporals.format(notice.createTime, 'yyyy.MM.dd')}">2023.10.10</span></span>
+        </div>
+      </div>
     </div>
-    <hr>
-
-    <div class="notice-search-box" th:object="${noticeSearchDto}">
-      <select th:field="*{searchDateType}" class="form-control">
-        <option value="all">전체기간</option>
-        <option value="1d">1일</option>
-        <option value="1w">1주</option>
-        <option value="1m">1개월</option>
-        <option value="6m">6개월</option>
-      </select>
-      <select th:field="*{searchBy}" class="form-control">
-        <option value="noticeTitle">제목</option>
-        <option value="createdBy">등록자</option>
-      </select>
-      <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
-      <button id="searchBtn" type="button" class="btn btn-search">검색</button>
+    <div th:if="${#lists.isEmpty(notices.getContent())}" class="col-12 text-center py-5">
+      <p>등록된 공지사항이 없습니다.</p>
     </div>
+  </div>
 
-    <table class="table">
-      <thead>
-      <tr>
-        <th>NO.</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>등록 날짜</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="notice : ${notices.getContent()}">
-        <td th:text="${notice.id}"></td>
-        <td>
-          <a th:href="@{'/notice/' + ${notice.id}}" th:text="${notice.noticeTitle}"></a>
-        </td>
-        <td th:text="${notice.author}"></td>
-        <td th:text="${#temporals.format(notice.createTime, 'yyyy-MM-dd HH:mm')}"></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <div class="pagination-container"
-         th:with="start=${(notices.number/maxPage)*maxPage + 1},
+  <div class="pagination-container"
+       th:with="start=${(notices.number/maxPage)*maxPage + 1},
                   end=(${(notices.totalPages == 0) ? 1 : (start + (maxPage-1) < notices.totalPages ? start + (maxPage - 1) : notices.totalPages)})">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${notices.first} ? 'disabled'">
-          <a class="page-link" th:data-page="${notices.number - 1}" aria-label="Previous">&laquo;</a>
-        </li>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${notices.first} ? 'disabled'">
+        <a class="page-link" th:data-page="${notices.number - 1}" aria-label="Previous">&laquo;</a>
+      </li>
 
-        <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}"
-            th:classappend="${notices.number eq page - 1} ? 'active'">
-          <a class="page-link" th:data-page="${page - 1}" th:text="${page}"></a>
-        </li>
+      <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}"
+          th:classappend="${notices.number eq page - 1} ? 'active'">
+        <a class="page-link" th:data-page="${page - 1}" th:text="${page}"></a>
+      </li>
 
-        <li class="page-item" th:classappend="${notices.last} ? 'disabled'">
-          <a class="page-link" th:data-page="${notices.number + 1}" aria-label="Next">&raquo;</a>
-        </li>
-      </ul>
-    </div>
+      <li class="page-item" th:classappend="${notices.last} ? 'disabled'">
+        <a class="page-link" th:data-page="${notices.number + 1}" aria-label="Next">&raquo;</a>
+      </li>
+    </ul>
   </div>
 </div>
 </html>
