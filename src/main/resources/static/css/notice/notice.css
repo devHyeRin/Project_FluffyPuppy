@@ -1,0 +1,209 @@
+/* 공지사항 전체 컨테이너 */
+.notice-container {
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+}
+
+/* 제목 영역 */
+.notice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    border-bottom: 0.2rem solid #333;
+    padding-bottom: 1.5rem;
+}
+
+.notice-header h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* 공지사항 없음 상태 */
+.empty-notice {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10rem 0;
+    background: #fff;
+    border-radius: 1.2rem;
+    border: 0.1rem dashed #ddd;
+    margin-top: 2rem;
+}
+
+.empty-notice .material-symbols-outlined {
+    font-size: 6rem;
+    color: #f8d7da;
+    margin-bottom: 2rem;
+}
+
+.empty-notice p {
+    font-size: 1.8rem;
+    color: #888;
+    font-weight: 500;
+}
+
+.notice-container .breadcrumb {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    font-size: 1.4rem;
+    color: #888;
+}
+
+/* 검색 바 */
+.notice-search-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 2rem 0 3rem;
+    gap: 1rem;
+}
+
+.notice-container .search-select,
+.notice-container .search-input {
+    border: 0.1rem solid #ddd;
+    border-radius: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.4rem;
+}
+
+.btn-notice-search {
+    background-color: #f8d7da;
+    border: 0.1rem solid #f8d7da;
+    color: white;
+    padding: 0.6rem 2rem;
+    border-radius: 0.4rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-notice-search:hover {
+    background-color: #f1b0b7;
+}
+
+/* 카드 그리드 레이아웃 */
+.notice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+}
+
+.notice-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    padding: 2.5rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.05);
+    border: 0.1rem solid #f1f1f1;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.notice-card:hover {
+    transform: translateY(-0.5rem);
+}
+
+.notice-card-body {
+    padding: 0 2rem 1rem 2rem;
+}
+
+.notice-card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    max-height: 2.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.notice-card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    color: #777;
+    margin-top: 1.5rem;
+    border-top: 0.1rem dashed #eee;
+    padding-top: 1.5rem;
+}
+
+.notice-card-author, .notice-card-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 아이콘 스타일 */
+.notice-card-meta .material-symbols-outlined {
+    font-size: 1.6rem;
+    color: #f8d7da;
+}
+
+/* 페이징 디자인 */
+.notice-container .pagination-container {
+    margin: 5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notice-container .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    gap: 1rem;
+}
+
+.notice-container .page-item {
+    margin: 0;
+}
+
+.notice-container .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 0.1rem solid #ddd;
+    background-color: #fff;
+    color: #888;
+    font-size: 1.4rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.notice-container .page-link:hover {
+    background-color: #f8d7da;
+    color: #fff;
+    border-color: #f8d7da;
+    transform: translateY(-0.2rem);
+}
+
+.notice-container .page-item.active .page-link {
+    background-color: #d2a7ac;
+    color: #fff;
+    border-color: #d2a7ac;
+}
+
+.notice-container .page-item.disabled .page-link {
+    color: #eee;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #eee;
+}
+
+.notice-container .page-link span {
+    display: block;
+    transform: translateY(-0.1rem);
+}

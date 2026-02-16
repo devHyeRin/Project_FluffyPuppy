@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class NoticeSearchDto {
 
-    private String searchDateType;
-
     private String searchBy;
 
     private String searchQuery = "";

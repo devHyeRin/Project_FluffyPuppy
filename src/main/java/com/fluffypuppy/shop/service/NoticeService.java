@@ -1,8 +1,6 @@
 package com.fluffypuppy.shop.service;
 
 import com.fluffypuppy.shop.dto.*;
-import com.fluffypuppy.shop.entity.CartItem;
-import com.fluffypuppy.shop.entity.ItemImg;
 import com.fluffypuppy.shop.entity.Notice;
 import com.fluffypuppy.shop.entity.NoticeImg;
 import com.fluffypuppy.shop.repository.NoticeImgRepository;
@@ -30,10 +28,10 @@ public class NoticeService {
         //상품등록
         Notice notice = noticeFormDto.createNotice();
         noticeRepository.save(notice);
+
         //이미지 등록
         for (int i = 0; i < noticeImgFileList.size(); i++) {
-            NoticeImg noticeImg = new NoticeImg();
-            noticeImg.setNotice(notice);
+            NoticeImg noticeImg = NoticeImg.createNoticeImg(notice);
 
             noticeImgService.saveNoticeImg(noticeImg, noticeImgFileList.get(i));
         }
@@ -45,10 +43,10 @@ public class NoticeService {
     public NoticeFormDto getNoticeDtl(Long noticeId) {
         List<NoticeImg> noticeImgList = noticeImgRepository.findByNoticeIdOrderByIdAsc(noticeId);
 
-        List<NoticeImgDto> noticeImgDtoList = new ArrayList<>();
+        List<NoticeFormDto.NoticeImgDto> noticeImgDtoList = new ArrayList<>();
 
         for (NoticeImg noticeImg : noticeImgList) {
-            NoticeImgDto noticeImgDto = NoticeImgDto.of(noticeImg);
+            NoticeFormDto.NoticeImgDto noticeImgDto = NoticeFormDto.NoticeImgDto.of(noticeImg);
             noticeImgDtoList.add(noticeImgDto);
         }
 
@@ -66,38 +64,17 @@ public class NoticeService {
         List<Long> noticeImgIds = noticeFormDto.getNoticeImgIds();
 
         for (int i = 0; i < noticeImgFileList.size(); i++) {
-            noticeImgService.updateNoticeImg(noticeImgIds.get(i), noticeImgFileList.get(i));
+            if(!noticeImgFileList.get(i).isEmpty()) {
+                noticeImgService.updateNoticeImg(noticeImgIds.get(i), noticeImgFileList.get(i));
+            }
         }
         return notice.getId();
     }
 
-
-    /*공지사항(관리자) 데이터 조회*/
+    /* 공지사항 목록 데이터 조회 (관리자/사용자 공용) */
     @Transactional(readOnly = true)
-    public Page<Notice> getAdminNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
-        return noticeRepository.getAdminNoticePage(noticeSearchDto, pageable);
+    public Page<Notice> getNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
+        return noticeRepository.getNoticePage(noticeSearchDto, pageable);
     }
 
-    /*공지사항(사용자) 데이터 조회*/
-    @Transactional(readOnly = true)
-    public Page<Notice> getUserNoticePage(NoticeSearchDto noticeSearchDto, Pageable pageable) {
-        return noticeRepository.getUserNoticePage(noticeSearchDto, pageable);
-    }
-
-    /*공지사항 각각 조회 (이미지도 조회)*/
-    @Transactional(readOnly = true)
-    public NoticeFormDto getUserNoticeDtl(Long noticeId) {
-        List<NoticeImg> noticeImgList = noticeImgRepository.findByNoticeIdOrderByIdAsc(noticeId);
-
-        List<NoticeImgDto> noticeImgDtoList = new ArrayList<>();
-
-        for(NoticeImg noticeImg : noticeImgList){
-            NoticeImgDto noticeImgDto = NoticeImgDto.of(noticeImg);
-            noticeImgDtoList.add(noticeImgDto);
-        }
-        Notice notice = noticeRepository.findById(noticeId).orElseThrow(EntityNotFoundException::new);
-        NoticeFormDto noticeFormDto = NoticeFormDto.of(notice);
-        noticeFormDto.setNoticeImgDtoList(noticeImgDtoList);
-        return noticeFormDto;
-    }
 }
