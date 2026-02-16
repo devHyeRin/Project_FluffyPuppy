@@ -45,12 +45,12 @@ Thumbs.db
 ############################
 application-local.properties
 application-oauth.properties
-application-prod.properties
 
 # yml 쓸 경우 대비
 application-local.yml
 application-oauth.yml
-application-prod.yml
+
+.env
 
 ############################
 # Upload / Static files
