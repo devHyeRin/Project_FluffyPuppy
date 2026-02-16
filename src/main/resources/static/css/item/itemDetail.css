@@ -9,10 +9,10 @@
 .breadcrumb-container {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 0;
-    margin-bottom: 25px;
-    font-size: 13px;
+    gap: 0.8rem;
+    padding: 1rem 0;
+    margin-bottom: 2.5rem;
+    font-size: 1.3rem;
 }
 .breadcrumb-container a {
     color: #333;
@@ -20,30 +20,30 @@
     display: flex;
     align-items: center;
 }
-.breadcrumb-container .separator { font-size: 14px; color: #ccc; }
+.breadcrumb-container .separator { font-size: 1.4rem; color: #ccc; }
 .breadcrumb-container .current-page { color: #666; }
 
 /* 메인 섹션: 이미지와 카드 배치 */
 .item-main-section {
     display: flex;
-    gap: 50px;
-    margin-bottom: 80px;
+    gap: 5rem;
+    margin-bottom: 8rem;
     align-items: flex-start;
 }
 
 /* 이미지 박스 */
 .item-image-box {
-    flex: 1.2; /* 이미지를 카드보다 조금 더 크게 설정 */
+    flex: 1.2;
     position: relative;
-    border-radius: 15px;
+    border-radius: 1.5rem;
     overflow: hidden;
     background: #f9f9f9;
-    border: 1px solid #f0f0f0;
+    border: 0.1rem solid #f0f0f0;
 }
 
 .main-item-img {
     width: 100%;
-    height: 550px; /* 높이를 조금 더 키워 가독성 확보 */
+    height: 55rem;
     object-fit: cover;
     display: block;
 }
@@ -53,71 +53,65 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
+    width: 55%;
 }
 
 /* 정보 카드 디자인 */
 .item-info-card {
     flex: 0.8;
     background: #fff;
-    border-radius: 20px;
-    padding: 35px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    position: sticky; /* 스크롤 시 카드가 따라옴 */
-    top: 100px;
+    border-radius: 2rem;
+    padding: 3.5rem;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,0.06);
+    position: sticky;
+    top: 10rem;
     height: fit-content;
 }
 
 .item-title {
-    font-size: 26px;
+    font-size: 2.6rem;
     font-weight: 700;
-    margin-bottom: 25px;
+    margin-bottom: 2.5rem;
     line-height: 1.4;
     color: #222;
 }
 
 .price-section {
-    margin-bottom: 15px;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: baseline;
 }
-.price-label { font-size: 14px; color: #888; margin-right: 12px; }
-.item-price { font-size: 24px; color: #f59898; font-weight: 700; }
+.price-label { font-size: 1.4rem; color: #888; margin-right: 1.2rem; }
+.item-price { font-size: 2.4rem; color: #f59898; font-weight: 700; }
 
 .shipping-info {
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #666;
-    margin-top: 10px;
+    margin-top: 1rem;
 }
-.shipping-info .label { margin-right: 10px; color: #888; }
+.shipping-info .label { margin-right: 1rem; color: #888; }
 
-.divider { margin: 30px 0; border: 0; border-top: 1px solid #f0f0f0; }
+.divider { margin: 3rem 0; border: 0; border-top: 0.1rem solid #f0f0f0; }
 
 /* 수량 선택 및 결제 금액 */
 .quantity-row, .total-price-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 
 .quantity-row .label, .total-price-row .label {
-    font-size: 15px;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #444;
 }
 
 #count {
-    width: 70px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    width: 7rem;
+    padding: 0.8rem;
+    border: 0.1rem solid #ddd;
+    border-radius: 0.6rem;
     text-align: center;
     outline-color: #f59898;
 }
@@ -125,28 +119,28 @@
 .total-price-value {
     color: #f59898;
     font-weight: 800;
-    font-size: 30px;
+    font-size: 3rem;
     margin: 0;
 }
 
 /* 버튼 그룹 */
 .button-group {
     display: flex;
-    gap: 12px;
-    margin-top: 35px;
+    gap: 1.2rem;
+    margin-top: 3.5rem;
 }
 .btn {
     flex: 1;
-    padding: 18px;
-    border-radius: 10px;
+    padding: 1.8rem;
+    border-radius: 1rem;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 1.6rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 .btn-cart {
     background: #fff;
-    border: 1px solid #f59898;
+    border: 0.1rem solid #f59898;
     color: #f59898;
 }
 .btn-cart:hover { background: #fff5f5; }
@@ -158,8 +152,8 @@
 }
 .btn-order:hover {
     background: #e08787;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(245, 152, 152, 0.3);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 1.5rem rgba(245, 152, 152, 0.3);
 }
 
 .btn-soldout {
@@ -171,8 +165,8 @@
 
 /* 탭 메뉴 내비게이션 */
 .item-menu-nav {
-    margin-top: 60px;
-    border-bottom: 2px solid #f0f0f0;
+    margin-top: 6rem;
+    border-bottom: 0.2rem solid #f0f0f0;
     background: #fff;
     position: sticky;
     top: 0;
@@ -188,8 +182,8 @@
 }
 
 .detail-nav li {
-    padding: 20px 50px;
-    font-size: 16px;
+    padding: 2rem 5rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: #999;
     cursor: pointer;
@@ -199,49 +193,49 @@
 
 .detail-nav li:hover { color: #f59898; }
 
-/* 탭 활성화 상태 (JS 연동 필요) */
+/* 탭 활성화 상태 */
 .detail-nav li.active {
     color: #f59898;
 }
 .detail-nav li.active::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -0.2rem;
     left: 0;
     width: 100%;
-    height: 3px;
+    height: 0.3rem;
     background: #f59898;
 }
 
 /* 상세 섹션 공통 */
 .detail-section {
-    padding: 100px 0;
+    padding: 10rem 0;
 }
 
 .section-title {
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 700;
-    margin-bottom: 40px;
+    margin-bottom: 4rem;
     text-align: center;
     color: #222;
 }
 
 /* 상세 이미지/내용 */
 .detail-content {
-    max-width: 900px;
+    max-width: 90rem;
     margin: 0 auto;
     text-align: center;
 }
 
 .detail-content img {
     max-width: 100%;
-    border-radius: 15px;
+    border-radius: 1.5rem;
     display: block;
-    margin: 0 auto 40px auto;
+    margin: 0 auto 4rem auto;
 }
 
 .detail-content p {
-    font-size: 16px;
+    font-size: 1.6rem;
     line-height: 1.8;
     color: #555;
     word-break: keep-all;
@@ -249,12 +243,12 @@
 
 /* 배송 정보 박스 */
 .info-box {
-    max-width: 900px;
+    max-width: 90rem;
     margin: 0 auto;
     background: #fcfcfc;
-    border: 1px solid #f0f0f0;
-    border-radius: 15px;
-    padding: 40px;
+    border: 0.1rem solid #f0f0f0;
+    border-radius: 1.5rem;
+    padding: 4rem;
 }
 
 .info-box ul {
@@ -263,8 +257,8 @@
 }
 
 .info-box li {
-    margin-bottom: 15px;
-    font-size: 15px;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
     color: #666;
     display: flex;
     align-items: center;
@@ -274,5 +268,5 @@
     content: "•";
     color: #f59898;
     font-weight: bold;
-    margin-right: 12px;
+    margin-right: 1.2rem;
 }

@@ -28,7 +28,7 @@
 
         <div class="item-main-section">
             <div class="item-image-box">
-                <div th:if="${!item.itemSellStatus.isSell()}" class="soldout-badge">
+                <div th:if="${item.itemSellStatus.name() == 'SOLD_OUT'}" class="soldout-badge">
                     <img src="/img/sold_out.png" alt="Sold Out">
                 </div>
                 <img th:src="${item.itemImgDtoList[0].imgUrl}" class="main-item-img" th:alt="${item.itemNm}">
@@ -65,11 +65,13 @@
                     </div>
 
                     <div class="button-group">
-                        <th:block th:if="${item.itemSellStatus.isSell()}">
+                        <th:block th:if="${item.itemSellStatus.name() == 'SELL'}">
                             <button type="button" class="btn btn-cart" onclick="addCart()">장바구니 담기</button>
                             <button type="button" class="btn btn-order" onclick="order()">주문하기</button>
                         </th:block>
-                        <button th:unless="${item.itemSellStatus.isSell()}" type="button" class="btn btn-soldout" disabled>품절된 상품입니다</button>
+
+                        <button th:if="${item.itemSellStatus.name() == 'SOLD_OUT'}"
+                                type="button" class="btn btn-soldout" disabled>품절된 상품입니다</button>
                     </div>
                 </div>
             </div>
