@@ -9,14 +9,6 @@
 
 <div layout:fragment="content">
     <div class="notice-detail-container">
-        <div class="notice-header">
-            <div class="breadcrumb">
-                <a th:href="@{/}"><span class="material-symbols-outlined">home</span></a>
-                <span class="material-symbols-outlined">arrow_forward_ios</span>
-                <span>공지사항</span>
-            </div>
-        </div>
-
         <div class="notice-detail-header">
             <h2 class="title" th:text="${notice.noticeTitle}">공지사항 제목입니다</h2>
             <div class="notice-detail-meta">
@@ -31,8 +23,8 @@
             </div>
         </div>
 
-        <div class="notice-detail-content">
-            <p th:text="${notice.noticeContent}">공지사항 본문 내용이 들어갑니다.</p>
+        <div class="notice-detail-content" th:if="${not #strings.isEmpty(notice.noticeContent)}">
+            <p th:text="${notice.noticeContent}">공지사항 본문</p>
         </div>
 
         <div class="notice-detail-images" th:if="${not #lists.isEmpty(notice.noticeImgDtoList)}">

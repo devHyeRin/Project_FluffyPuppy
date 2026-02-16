@@ -25,21 +25,27 @@
     gap: 2rem;
     font-size: 1.4rem;
     color: #777;
+    align-items: center;
+}
+
+.notice-detail-meta .material-symbols-outlined {
+    font-size: 1.8rem;
+    vertical-align: middle;
+    margin-right: 0.4rem;
 }
 
 /* 본문 영역 */
 .notice-detail-content {
-    min-height: 30rem;
-    padding: 2rem 0;
+    padding: 1rem 0;
     font-size: 1.6rem;
     line-height: 1.8;
     color: #444;
-    white-space: pre-wrap; =
+    white-space: pre-wrap;
 }
 
 /* 이미지 영역 */
 .notice-detail-images {
-    margin: 4rem 0;
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
