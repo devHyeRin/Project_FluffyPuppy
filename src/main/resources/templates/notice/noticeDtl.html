@@ -13,11 +13,11 @@
             <h2 class="title" th:text="${notice.noticeTitle}">공지사항 제목입니다</h2>
             <div class="notice-detail-meta">
                 <span class="author">
-                    <span class="material-symbols-outlined" style="font-size: 1.6rem; vertical-align: middle;">person</span>
+                    <span class="material-symbols-outlined">person</span>
                     <th:block th:text="${notice.author}">관리자</th:block>
                 </span>
                 <span class="date">
-                    <span class="material-symbols-outlined" style="font-size: 1.6rem; vertical-align: middle;">calendar_month</span>
+                    <span class="material-symbols-outlined">calendar_month</span>
                     <th:block th:text="${#temporals.format(notice.createTime, 'yyyy.MM.dd HH:mm')}">2023.10.10</th:block>
                 </span>
             </div>
