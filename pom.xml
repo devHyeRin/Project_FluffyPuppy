@@ -129,8 +129,9 @@
     </dependencies>
 
     <build>
+        <!--.jar filename setting-->
+        <finalName>app</finalName>
         <plugins>
-
             <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
