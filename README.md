@@ -1,10 +1,10 @@
 # 🐶 Project_FluffyPuppy
 
 Spring Boot 기반 반려동물 용품 쇼핑몰 웹 애플리케이션
-기존 CRUD 중심 프로젝트를 **도메인 구조 재설계 및 인증 체계 개선을 목표로 전면 리팩토링한 프로젝트**입니다.
+기존 CRUD 중심 프로젝트를 **도메인 구조 재설계 및 인증 체계 개선, 그리고 CI/CD 자동화 인프라 구축을 목표로 전면 리팩토링한 프로젝트**입니다.
 
 > “동작하는 코드”에서 끝나는 것이 아니라  
-> **유지보수 가능한 구조와 설계 의도를 설명할 수 있는 코드**를 만드는 것을 목표로 개선했습니다.
+> **유지보수 가능한 구조와 설계 의도를 설명할 수 있는 코드, 그리고 안정적인 배포 환경** 만드는 것을 목표로 했습니다.
 > 
 ---
 
@@ -44,6 +44,17 @@ Spring Boot 기반 반려동물 용품 쇼핑몰 웹 애플리케이션
 
 ---
 
+## 🌐 인프라 및 CI/CD 구축
+
+단순 배포를 넘어, **보안(HTTPS)**과 **자동화(CI/CD)**를 결합한 안정적인 운영 인프라를 직접 설계하고 구축
+
+### 🛠️ DevOps 아키텍처
+- CI/CD : **GitHub Actions**를 통한 자동 빌드, 테스트 및 배포 프로세스 구축
+- Container : **Docker와 Docker Compose**를 사용해 **Spring Boot, MySQL, Nginx**를 독립된 컨테이너로 격리
+- Reverse Proxy : **Nginx**를 활용한 포트 포워딩
+- SSL/TLS (HTTPS) : Let's Encrypt와 Certbot을 연동하여 **HTTPS 보안 프로토콜** 적용
+
+---
 ## 🚀 리팩토링 핵심 개선 사항
 
 ## 🔥 Refactoring Summary
@@ -103,6 +114,14 @@ Spring Boot 기반 반려동물 용품 쇼핑몰 웹 애플리케이션
 
 ---
 
+### 6️⃣ DevOps 환경 최적화
+
+- Multi-stage Build : Docker 이미지 크기 최소화 및 빌드 효율 증가
+- Layer Caching : Maven 의존성 캐싱을 통한 CI 빌드 시간 단축
+- Environment Isolation : .env 파일을 통한 설정값과 소스코드 분리
+
+---
+
 ## 🌿 Branch Strategy
 
 도메인 단위 브랜치 전략을 적용하여  
@@ -125,62 +144,27 @@ update/item-status
 ## 🧱 기술 스택
 
 ### Backend
-- Java 17
-- Spring Boot
-- Spring MVC
-- Spring Data JPA
-- Spring Security
-- OAuth2
-- QueryDSL
+- Java 17 / Spring Boot
+- Spring Data JPA / QueryDSL
+- Spring Security / OAuth2
 - REST API
 
 ### Frontend
-- Thymeleaf
-- HTML5
-- CSS3 
-- JavaScript
+- Thymeleaf / HTML5 / CSS3 / JavaScript
 
 ### Database
 - MySQL
 
-### DevOps (예정)
-- AWS EC2
-- Docker
+### DevOps
+- AWS EC2 (Ubuntu)
+- Docker, Docker Compose
 - GitHub Actions (CI/CD)
+- Nginx
 
 ---
 
-## 📂 현재 프로젝트 구조 (리팩토링 후)
+## 📂 프로젝트 구조
 
-```bash
-src
- ├─ main
- │   ├─ java
- │   │   └─ com.fluffypuppy.shop
- │   │       ├─ config
- │   │       ├─ controller
- │   │       ├─ service
- │   │       ├─ repository
- │   │       ├─ entity
- │   │       ├─ dto
- │   │       ├─ exception
- │   │       └─ constant
- │   └─ resources
- │       ├─ templates
- │       │   ├─ cart
- │       │   ├─ item
- │       │   ├─ member
- │       │   ├─ notice
- │       │   ├─ order
- │       │   ├─ layouts
- │       │   └─ fragments
- │       └─ static
- │           ├─ css
- │           ├─ js
- │           └─ img
-```
-
-## 🚀 배포 이후 적용 예정 구조 (도메인 중심 패키지 구조)
 ```bash
 shop
  ├── global
@@ -201,8 +185,6 @@ shop
  ├── notice
 ```
 
-👉 도메인 단위 응집도를 높여 유지보수성과 확장성 개선 예정
-
 ---
 
 ## 🗄️ DB 설계
@@ -215,13 +197,9 @@ shop
 
 ## 🖥️ 실행 화면
 
-> 실행 화면 캡처 이미지를 여기에 추가 예정
+> 배포 주소 : https://fluffypuppy.store
 
-- 메인 페이지
-- 로그인 / SNS 로그인
-- 장바구니
-- 주문 내역
-- 관리자 공지사항 관리
+(이미지 캡처 추가 예정)
 
 ---
 
@@ -229,10 +207,10 @@ shop
 
 - Spring Security 인증 구조를 직접 설계하며 내부 동작 이해도 향상
 - 회원 통합 과정에서 도메인 의존성 정리 경험
-- QueryDSL 기반 동적 조회 구현 경험
-- 사용자 기준 데이터 정합성 보장 설계 경험
 - 구조적 리팩토링 및 브랜치 전략 운영 경험
 - 프론트엔드 레이아웃 구조화 경험
+- GitHub Actions와 Docker를 연동하여 배포 작업 자동화 경험
+- Docker Compose로 다중 컨테이너 간의 네트워크 연결 및 볼륨 설정을 통해 데이터 영속성 보장 구조 이해
 
 ---
 
@@ -246,15 +224,6 @@ git clone https://github.com/devHyeRin/Project_FluffyPuppy.git
 ```
 
 ---
-## 📦 배포 계획
-
-- AWS EC2 서버 배포
-- Docker 기반 컨테이너 실행
-- MySQL 컨테이너 구성
-- GitHub Actions 기반 CI/CD 자동화 예정
-
----
-
 
 ## 👩‍💻 개발자
 
