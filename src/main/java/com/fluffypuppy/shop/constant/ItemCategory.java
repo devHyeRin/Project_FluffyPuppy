@@ -7,12 +7,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ItemCategory {
 
-    FOOD("사료"),
-    SNACK("간식"),
-    BATH("목욕"),
-    CLOTHES("의류"),
-    STUFF("용품"),
-    BOWEL("배변");
+    FOOD("사료", "food"),
+    SNACK("영양간식", "snack"),
+    BATH("목욕용품", "bath"),
+    BOWEL("위생/배변", "bowel"),
+    CLOTHES("장난감/옷", "toy"),
+    STUFF("굿즈", "stuff");
 
     private final String description;
+    private final String imageName;
 }
