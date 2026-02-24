@@ -63,12 +63,10 @@
 
             <li class="mobile-only divider"></li>
 
-            <li class="menu"><a th:href="@{/category/food}">사료</a></li>
-            <li class="menu"><a th:href="@{/category/snack}">영양간식</a></li>
-            <li class="menu"><a th:href="@{/category/bath}">목욕용품</a></li>
-            <li class="menu"><a th:href="@{/category/bowel}">위생/배변</a></li>
-            <li class="menu"><a th:href="@{/category/clothes}">장난감/옷</a></li>
-            <li class="menu"><a th:href="@{/category/stuff}">굿즈</a></li>
+            <li class="menu" th:each="category : ${T(com.fluffypuppy.shop.constant.ItemCategory).values()}">
+                <a th:href="@{'/category/' + ${category.name().toLowerCase()}}"
+                   th:text="${category.description}">카테고리명</a>
+            </li>
         </ul>
     </div>
 </header>
