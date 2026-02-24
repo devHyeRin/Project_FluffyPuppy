@@ -1,0 +1,204 @@
+/* =========================
+   Category Title Section
+   ========================= */
+.item_wrap {
+    margin-top: 5rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.category_title {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #333;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.category_title.line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12rem;
+    height: 0.4rem;
+    background-color: #d27878;
+}
+
+.category_icon {
+    width: 3.8rem;
+    height: 3.8rem;
+    margin-left: 1.5rem;
+    object-fit: contain;
+}
+
+/* =========================
+   Product Grid Layout (4열 고정)
+   ========================= */
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* =========================
+   Product Card Design
+   ========================= */
+.main_item {
+    transition: transform 0.3s ease;
+}
+
+.main_item:hover {
+    transform: translateY(-1rem);
+}
+
+.product-container {
+    background: #fff;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.img-box {
+    width: 100%;
+    height: 26rem; /* 이미지 높이 조절 */
+    overflow: hidden;
+    background-color: #f8f8f8;
+}
+
+.repImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.main_item:hover .repImg {
+    transform: scale(1.05);
+}
+
+.main_item_dtl {
+    padding: 2rem 1.5rem;
+    flex-grow: 1;
+}
+
+.item_title {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d27878;
+}
+
+/* =========================
+   Sold Out Style
+   ========================= */
+.is-sold-out .repImg {
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+
+.main_item_status {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 5;
+}
+
+.sold-out-badge {
+    background: rgba(210, 120, 120, 0.9);
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    font-weight: 600;
+}
+
+/* =========================
+   Pagination Style (정렬 및 틀 보정)
+   ========================= */
+.pagination-wrap {
+    margin-top: 13rem;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-wrap .pagination {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0;
+    list-style: none;
+    gap: 0.8rem;
+}
+
+.pagination-wrap .pagination .page-item {
+    list-style: none;
+}
+
+.pagination-wrap .pagination .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4rem;
+    height: 4rem;
+    padding: 0 1.2rem;
+    font-size: 1.4rem;
+    color: #666;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.pagination-wrap .pagination .page-link:hover {
+    color: #d27878;
+    background-color: #fcfcfc;
+    border-color: #d27878;
+}
+
+.pagination-wrap .pagination .page-item.active .page-link {
+    color: #fff;
+    background-color: #d27878;
+    border-color: #d27878;
+    font-weight: 600;
+}
+
+.pagination-wrap .pagination .page-item.disabled .page-link {
+    color: #ccc;
+    background-color: #f9f9f9;
+    border-color: #eee;
+    cursor: not-allowed;
+}
+
+/* =========================
+   Responsive (반응형)
+   ========================= */
+@media (max-width: 1024px) {
+    .item-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .item-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.5rem; }
+    .img-box { height: 20rem; }
+}
