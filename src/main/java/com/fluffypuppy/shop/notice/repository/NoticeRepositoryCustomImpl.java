@@ -5,7 +5,7 @@ import com.fluffypuppy.shop.notice.entity.Notice;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.fluffypuppy.shop.entity.*;
+import com.fluffypuppy.shop.notice.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

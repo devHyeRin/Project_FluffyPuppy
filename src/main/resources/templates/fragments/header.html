@@ -63,7 +63,7 @@
 
             <li class="mobile-only divider"></li>
 
-            <li class="menu" th:each="category : ${T(com.fluffypuppy.shop.constant.ItemCategory).values()}">
+            <li class="menu" th:each="category : ${T(com.fluffypuppy.shop.item.constant.ItemCategory).values()}">
                 <a th:href="@{'/category/' + ${category.name().toLowerCase()}}"
                    th:text="${category.description}">카테고리명</a>
             </li>
