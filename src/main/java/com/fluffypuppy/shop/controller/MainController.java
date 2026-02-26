@@ -1,9 +1,8 @@
 package com.fluffypuppy.shop.controller;
 
-import com.fluffypuppy.shop.dto.ItemSearchDto;
+import com.fluffypuppy.shop.item.dto.ItemSearchDto;
 import com.fluffypuppy.shop.dto.MainItemDto;
-import com.fluffypuppy.shop.dto.SessionUser;
-import com.fluffypuppy.shop.service.ItemService;
+import com.fluffypuppy.shop.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

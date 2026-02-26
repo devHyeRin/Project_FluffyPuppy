@@ -1,13 +1,13 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.item.service;
 
-import com.fluffypuppy.shop.dto.ItemFormDto;
-import com.fluffypuppy.shop.dto.ItemImgDto;
-import com.fluffypuppy.shop.dto.ItemSearchDto;
+import com.fluffypuppy.shop.item.dto.ItemFormDto;
+import com.fluffypuppy.shop.item.dto.ItemImgDto;
+import com.fluffypuppy.shop.item.dto.ItemSearchDto;
 import com.fluffypuppy.shop.dto.MainItemDto;
-import com.fluffypuppy.shop.entity.Item;
-import com.fluffypuppy.shop.entity.ItemImg;
-import com.fluffypuppy.shop.repository.ItemImgRepository;
-import com.fluffypuppy.shop.repository.ItemRepository;
+import com.fluffypuppy.shop.item.entity.Item;
+import com.fluffypuppy.shop.item.entity.ItemImg;
+import com.fluffypuppy.shop.item.repository.ItemImgRepository;
+import com.fluffypuppy.shop.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

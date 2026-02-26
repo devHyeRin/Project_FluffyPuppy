@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.dto;
+package com.fluffypuppy.shop.item.dto;
 
 import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.constant.ItemSellStatus;

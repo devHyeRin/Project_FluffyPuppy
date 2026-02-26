@@ -1,6 +1,6 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.item.repository;
 
-import com.fluffypuppy.shop.entity.ItemImg;
+import com.fluffypuppy.shop.item.entity.ItemImg;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.item.service;
 
-import com.fluffypuppy.shop.entity.ItemImg;
+import com.fluffypuppy.shop.item.entity.ItemImg;
 import com.fluffypuppy.shop.global.util.FileService;
-import com.fluffypuppy.shop.repository.ItemImgRepository;
+import com.fluffypuppy.shop.item.repository.ItemImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

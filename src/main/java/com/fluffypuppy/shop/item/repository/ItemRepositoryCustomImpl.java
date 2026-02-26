@@ -1,14 +1,14 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.item.repository;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.constant.ItemSellStatus;
-import com.fluffypuppy.shop.dto.ItemSearchDto;
+import com.fluffypuppy.shop.item.dto.ItemSearchDto;
 import com.fluffypuppy.shop.dto.MainItemDto;
 import com.fluffypuppy.shop.dto.QMainItemDto;
-import com.fluffypuppy.shop.entity.Item;
+import com.fluffypuppy.shop.item.entity.Item;
 import com.fluffypuppy.shop.entity.QItem;
 import com.fluffypuppy.shop.entity.QItemImg;
 import org.springframework.data.domain.Page;

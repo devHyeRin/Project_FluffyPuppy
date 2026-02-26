@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.item.entity;
 
 import com.fluffypuppy.shop.global.entity.BaseEntity;
 import lombok.Getter;

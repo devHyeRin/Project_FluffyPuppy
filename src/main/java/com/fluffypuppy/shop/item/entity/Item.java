@@ -1,8 +1,8 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.item.entity;
 
 import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.constant.ItemSellStatus;
-import com.fluffypuppy.shop.dto.ItemFormDto;
+import com.fluffypuppy.shop.item.dto.ItemFormDto;
 import com.fluffypuppy.shop.global.entity.BaseEntity;
 import com.fluffypuppy.shop.global.exception.OutOfStockException;
 import com.fluffypuppy.shop.member.entity.Member;

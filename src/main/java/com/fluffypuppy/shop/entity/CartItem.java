@@ -1,6 +1,7 @@
 package com.fluffypuppy.shop.entity;
 
 import com.fluffypuppy.shop.global.entity.BaseEntity;
+import com.fluffypuppy.shop.item.entity.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
