@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.global.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;

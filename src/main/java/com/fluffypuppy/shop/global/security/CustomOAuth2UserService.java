@@ -1,8 +1,8 @@
 package com.fluffypuppy.shop.global.security;
 
 import com.fluffypuppy.shop.global.config.OAuthAttributes;
-import com.fluffypuppy.shop.constant.Role;
-import com.fluffypuppy.shop.dto.SessionUser;
+import com.fluffypuppy.shop.member.constant.Role;
+import com.fluffypuppy.shop.member.dto.SessionUser;
 import com.fluffypuppy.shop.member.entity.Member;
 import com.fluffypuppy.shop.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

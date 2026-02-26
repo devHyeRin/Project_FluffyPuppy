@@ -1,7 +1,7 @@
 package com.fluffypuppy.shop.item.controller;
 
 
-import com.fluffypuppy.shop.constant.ItemCategory;
+import com.fluffypuppy.shop.item.constant.ItemCategory;
 import com.fluffypuppy.shop.item.dto.ItemSearchDto;
 import com.fluffypuppy.shop.item.dto.MainItemDto;
 import com.fluffypuppy.shop.item.service.ItemService;

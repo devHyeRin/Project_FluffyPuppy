@@ -1,6 +1,6 @@
 package com.fluffypuppy.shop.global.config;
 
-import com.fluffypuppy.shop.constant.Provider;
+import com.fluffypuppy.shop.member.constant.Provider;
 import lombok.Builder;
 import lombok.Getter;
 

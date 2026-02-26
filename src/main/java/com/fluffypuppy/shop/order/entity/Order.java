@@ -1,6 +1,6 @@
 package com.fluffypuppy.shop.order.entity;
 
-import com.fluffypuppy.shop.constant.OrderStatus;
+import com.fluffypuppy.shop.order.constant.OrderStatus;
 import com.fluffypuppy.shop.global.entity.BaseEntity;
 import com.fluffypuppy.shop.member.entity.Member;
 import lombok.AccessLevel;

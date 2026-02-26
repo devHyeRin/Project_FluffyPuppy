@@ -1,6 +1,6 @@
 package com.fluffypuppy.shop.member.dto;
 
-import com.fluffypuppy.shop.constant.Provider;
+import com.fluffypuppy.shop.member.constant.Provider;
 import com.fluffypuppy.shop.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;

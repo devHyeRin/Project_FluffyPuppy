@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.dto;
+package com.fluffypuppy.shop.member.dto;
 
 import com.fluffypuppy.shop.member.entity.Member;
 import lombok.Getter;

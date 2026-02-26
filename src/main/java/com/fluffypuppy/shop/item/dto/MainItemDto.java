@@ -1,7 +1,7 @@
 package com.fluffypuppy.shop.item.dto;
 
+import com.fluffypuppy.shop.item.constant.ItemSellStatus;
 import com.querydsl.core.annotations.QueryProjection;
-import com.fluffypuppy.shop.constant.ItemSellStatus;
 import lombok.Getter;
 import lombok.Setter;
 

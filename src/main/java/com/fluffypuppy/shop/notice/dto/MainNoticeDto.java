@@ -1,7 +1,7 @@
 package com.fluffypuppy.shop.notice.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.fluffypuppy.shop.constant.NoticeCategory;
+import com.fluffypuppy.shop.notice.constant.NoticeCategory;
 import lombok.Getter;
 import lombok.Setter;
 

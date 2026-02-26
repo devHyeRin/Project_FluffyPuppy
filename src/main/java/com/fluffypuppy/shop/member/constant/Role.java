@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.constant;
+package com.fluffypuppy.shop.member.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

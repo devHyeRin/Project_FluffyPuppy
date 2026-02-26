@@ -2,7 +2,7 @@ package com.fluffypuppy.shop.member.controller;
 
 import com.fluffypuppy.shop.member.dto.MemberFormDto;
 import com.fluffypuppy.shop.member.entity.Member;
-import com.fluffypuppy.shop.service.MailService;
+import com.fluffypuppy.shop.global.util.MailService;
 import com.fluffypuppy.shop.member.service.MemberService;
 import com.fluffypuppy.shop.member.service.MemberUpdateService;
 import lombok.RequiredArgsConstructor;

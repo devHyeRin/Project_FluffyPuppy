@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.constant;
+package com.fluffypuppy.shop.order.constant;
 
 public enum OrderStatus {
     ORDER, CANCEL;

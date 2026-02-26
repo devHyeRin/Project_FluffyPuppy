@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.constant;
+package com.fluffypuppy.shop.notice.constant;
 
 public enum NoticeCategory {
     NOTICE, EVENT

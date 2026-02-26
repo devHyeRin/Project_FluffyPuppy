@@ -1,7 +1,7 @@
 package com.fluffypuppy.shop.member.entity;
 
-import com.fluffypuppy.shop.constant.Provider;
-import com.fluffypuppy.shop.constant.Role;
+import com.fluffypuppy.shop.member.constant.Provider;
+import com.fluffypuppy.shop.member.constant.Role;
 import com.fluffypuppy.shop.member.dto.MemberFormDto;
 import com.fluffypuppy.shop.global.entity.BaseEntity;
 import lombok.Getter;
