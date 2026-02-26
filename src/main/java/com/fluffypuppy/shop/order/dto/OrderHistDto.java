@@ -1,8 +1,8 @@
-package com.fluffypuppy.shop.dto;
+package com.fluffypuppy.shop.order.dto;
 
 import com.fluffypuppy.shop.constant.OrderStatus;
-import com.fluffypuppy.shop.entity.Order;
-import com.fluffypuppy.shop.entity.OrderItem;
+import com.fluffypuppy.shop.order.entity.Order;
+import com.fluffypuppy.shop.order.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,8 +1,8 @@
-package com.fluffypuppy.shop.controller;
+package com.fluffypuppy.shop.order.controller;
 
-import com.fluffypuppy.shop.dto.OrderRequestDto;
-import com.fluffypuppy.shop.dto.OrderHistDto;
-import com.fluffypuppy.shop.service.OrderService;
+import com.fluffypuppy.shop.order.dto.OrderRequestDto;
+import com.fluffypuppy.shop.order.dto.OrderHistDto;
+import com.fluffypuppy.shop.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

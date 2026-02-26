@@ -1,15 +1,16 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.order.service;
 
-import com.fluffypuppy.shop.dto.OrderRequestDto;
-import com.fluffypuppy.shop.dto.OrderHistDto;
-import com.fluffypuppy.shop.entity.*;
+import com.fluffypuppy.shop.order.dto.OrderRequestDto;
+import com.fluffypuppy.shop.order.dto.OrderHistDto;
 import com.fluffypuppy.shop.item.entity.Item;
 import com.fluffypuppy.shop.item.entity.ItemImg;
 import com.fluffypuppy.shop.member.entity.Member;
 import com.fluffypuppy.shop.item.repository.ItemImgRepository;
 import com.fluffypuppy.shop.item.repository.ItemRepository;
 import com.fluffypuppy.shop.member.repository.MemberRepository;
-import com.fluffypuppy.shop.repository.OrderRepository;
+import com.fluffypuppy.shop.order.entity.Order;
+import com.fluffypuppy.shop.order.entity.OrderItem;
+import com.fluffypuppy.shop.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.order.entity;
 
 import com.fluffypuppy.shop.constant.OrderStatus;
 import com.fluffypuppy.shop.global.entity.BaseEntity;

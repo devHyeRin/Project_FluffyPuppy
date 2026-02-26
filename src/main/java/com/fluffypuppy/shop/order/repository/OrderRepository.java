@@ -1,6 +1,6 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.order.repository;
 
-import com.fluffypuppy.shop.entity.Order;
+import com.fluffypuppy.shop.order.entity.Order;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
