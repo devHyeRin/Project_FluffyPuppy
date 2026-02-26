@@ -6,7 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.constant.ItemSellStatus;
 import com.fluffypuppy.shop.item.dto.ItemSearchDto;
-import com.fluffypuppy.shop.dto.MainItemDto;
+import com.fluffypuppy.shop.item.dto.MainItemDto;
 import com.fluffypuppy.shop.dto.QMainItemDto;
 import com.fluffypuppy.shop.item.entity.Item;
 import com.fluffypuppy.shop.entity.QItem;

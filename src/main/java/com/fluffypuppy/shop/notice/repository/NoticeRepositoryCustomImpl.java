@@ -1,9 +1,10 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.notice.repository;
 
+import com.fluffypuppy.shop.notice.dto.NoticeSearchDto;
+import com.fluffypuppy.shop.notice.entity.Notice;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.fluffypuppy.shop.dto.*;
 import com.fluffypuppy.shop.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

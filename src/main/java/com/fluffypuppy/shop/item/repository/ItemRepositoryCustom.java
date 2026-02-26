@@ -1,7 +1,7 @@
 package com.fluffypuppy.shop.item.repository;
 
 import com.fluffypuppy.shop.item.dto.ItemSearchDto;
-import com.fluffypuppy.shop.dto.MainItemDto;
+import com.fluffypuppy.shop.item.dto.MainItemDto;
 import com.fluffypuppy.shop.item.entity.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,7 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.notice.repository;
 
-import com.fluffypuppy.shop.dto.NoticeSearchDto;
-import com.fluffypuppy.shop.entity.Notice;
+import com.fluffypuppy.shop.notice.dto.NoticeSearchDto;
+import com.fluffypuppy.shop.notice.entity.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,6 +1,6 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.notice.entity;
 
-import com.fluffypuppy.shop.dto.NoticeFormDto;
+import com.fluffypuppy.shop.notice.dto.NoticeFormDto;
 import com.fluffypuppy.shop.global.entity.BaseEntity;
 import lombok.*;
 

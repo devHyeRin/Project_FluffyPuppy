@@ -1,10 +1,11 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.notice.service;
 
-import com.fluffypuppy.shop.dto.*;
-import com.fluffypuppy.shop.entity.Notice;
-import com.fluffypuppy.shop.entity.NoticeImg;
-import com.fluffypuppy.shop.repository.NoticeImgRepository;
-import com.fluffypuppy.shop.repository.NoticeRepository;
+import com.fluffypuppy.shop.notice.entity.Notice;
+import com.fluffypuppy.shop.notice.entity.NoticeImg;
+import com.fluffypuppy.shop.notice.dto.NoticeFormDto;
+import com.fluffypuppy.shop.notice.dto.NoticeSearchDto;
+import com.fluffypuppy.shop.notice.repository.NoticeImgRepository;
+import com.fluffypuppy.shop.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

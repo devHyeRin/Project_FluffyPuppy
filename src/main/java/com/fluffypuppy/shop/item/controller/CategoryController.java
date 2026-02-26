@@ -3,7 +3,7 @@ package com.fluffypuppy.shop.item.controller;
 
 import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.item.dto.ItemSearchDto;
-import com.fluffypuppy.shop.dto.MainItemDto;
+import com.fluffypuppy.shop.item.dto.MainItemDto;
 import com.fluffypuppy.shop.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

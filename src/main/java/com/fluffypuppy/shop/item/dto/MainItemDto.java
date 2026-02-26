@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.dto;
+package com.fluffypuppy.shop.item.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.fluffypuppy.shop.constant.ItemSellStatus;

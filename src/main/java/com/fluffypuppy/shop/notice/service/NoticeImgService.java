@@ -1,8 +1,8 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.notice.service;
 
-import com.fluffypuppy.shop.entity.NoticeImg;
+import com.fluffypuppy.shop.notice.entity.NoticeImg;
 import com.fluffypuppy.shop.global.util.FileService;
-import com.fluffypuppy.shop.repository.NoticeImgRepository;
+import com.fluffypuppy.shop.notice.repository.NoticeImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

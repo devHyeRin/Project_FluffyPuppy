@@ -1,7 +1,7 @@
-package com.fluffypuppy.shop.controller;
+package com.fluffypuppy.shop.home;
 
 import com.fluffypuppy.shop.item.dto.ItemSearchDto;
-import com.fluffypuppy.shop.dto.MainItemDto;
+import com.fluffypuppy.shop.item.dto.MainItemDto;
 import com.fluffypuppy.shop.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

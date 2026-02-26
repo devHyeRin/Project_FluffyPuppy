@@ -1,7 +1,7 @@
-package com.fluffypuppy.shop.dto;
+package com.fluffypuppy.shop.notice.dto;
 
-import com.fluffypuppy.shop.entity.Notice;
-import com.fluffypuppy.shop.entity.NoticeImg;
+import com.fluffypuppy.shop.notice.entity.Notice;
+import com.fluffypuppy.shop.notice.entity.NoticeImg;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;

@@ -1,8 +1,9 @@
-package com.fluffypuppy.shop.controller;
+package com.fluffypuppy.shop.notice.controller;
 
-import com.fluffypuppy.shop.dto.*;
-import com.fluffypuppy.shop.entity.Notice;
-import com.fluffypuppy.shop.service.NoticeService;
+import com.fluffypuppy.shop.notice.entity.Notice;
+import com.fluffypuppy.shop.notice.dto.NoticeFormDto;
+import com.fluffypuppy.shop.notice.dto.NoticeSearchDto;
+import com.fluffypuppy.shop.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
