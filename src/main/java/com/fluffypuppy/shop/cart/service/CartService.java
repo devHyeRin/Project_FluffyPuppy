@@ -1,17 +1,18 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.cart.service;
 
-import com.fluffypuppy.shop.dto.CartDetailDto;
-import com.fluffypuppy.shop.dto.CartItemDto;
-import com.fluffypuppy.shop.dto.CartOrderDto;
+import com.fluffypuppy.shop.cart.dto.CartDetailDto;
+import com.fluffypuppy.shop.cart.dto.CartItemDto;
+import com.fluffypuppy.shop.cart.dto.CartOrderDto;
 import com.fluffypuppy.shop.dto.OrderRequestDto;
-import com.fluffypuppy.shop.entity.Cart;
-import com.fluffypuppy.shop.entity.CartItem;
+import com.fluffypuppy.shop.cart.entity.Cart;
+import com.fluffypuppy.shop.cart.entity.CartItem;
 import com.fluffypuppy.shop.item.entity.Item;
 import com.fluffypuppy.shop.member.entity.Member;
-import com.fluffypuppy.shop.repository.CartItemRepository;
-import com.fluffypuppy.shop.repository.CartRepository;
+import com.fluffypuppy.shop.cart.repository.CartItemRepository;
+import com.fluffypuppy.shop.cart.repository.CartRepository;
 import com.fluffypuppy.shop.item.repository.ItemRepository;
 import com.fluffypuppy.shop.member.repository.MemberRepository;
+import com.fluffypuppy.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

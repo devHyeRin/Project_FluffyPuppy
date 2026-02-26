@@ -1,9 +1,9 @@
-package com.fluffypuppy.shop.controller;
+package com.fluffypuppy.shop.cart.controller;
 
-import com.fluffypuppy.shop.dto.CartDetailDto;
-import com.fluffypuppy.shop.dto.CartItemDto;
-import com.fluffypuppy.shop.dto.CartOrderDto;
-import com.fluffypuppy.shop.service.CartService;
+import com.fluffypuppy.shop.cart.dto.CartDetailDto;
+import com.fluffypuppy.shop.cart.dto.CartItemDto;
+import com.fluffypuppy.shop.cart.dto.CartOrderDto;
+import com.fluffypuppy.shop.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.cart.repository;
 
-import com.fluffypuppy.shop.entity.Cart;
+import com.fluffypuppy.shop.cart.entity.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {

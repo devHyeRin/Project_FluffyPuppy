@@ -1,7 +1,7 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.cart.repository;
 
-import com.fluffypuppy.shop.dto.CartDetailDto;
-import com.fluffypuppy.shop.entity.CartItem;
+import com.fluffypuppy.shop.cart.dto.CartDetailDto;
+import com.fluffypuppy.shop.cart.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.dto;
+package com.fluffypuppy.shop.cart.dto;
 
 import lombok.Getter;
 import lombok.Setter;

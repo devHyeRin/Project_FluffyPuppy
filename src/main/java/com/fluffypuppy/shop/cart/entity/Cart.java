@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.cart.entity;
 
 import com.fluffypuppy.shop.global.entity.BaseEntity;
 import com.fluffypuppy.shop.member.entity.Member;
