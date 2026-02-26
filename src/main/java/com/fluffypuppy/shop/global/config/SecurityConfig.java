@@ -1,8 +1,7 @@
-package com.fluffypuppy.shop.config;
+package com.fluffypuppy.shop.global.config;
 
-import com.fluffypuppy.shop.service.CustomOAuth2UserService;
-import com.fluffypuppy.shop.service.MemberService;
-import lombok.RequiredArgsConstructor;
+import com.fluffypuppy.shop.global.security.CustomOAuth2UserService;
+import com.fluffypuppy.shop.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

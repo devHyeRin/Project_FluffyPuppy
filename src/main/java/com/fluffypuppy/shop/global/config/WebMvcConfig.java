@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.config;
+package com.fluffypuppy.shop.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

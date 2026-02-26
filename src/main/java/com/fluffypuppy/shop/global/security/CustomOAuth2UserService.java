@@ -1,10 +1,10 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.global.security;
 
-import com.fluffypuppy.shop.config.OAuthAttributes;
+import com.fluffypuppy.shop.global.config.OAuthAttributes;
 import com.fluffypuppy.shop.constant.Role;
 import com.fluffypuppy.shop.dto.SessionUser;
-import com.fluffypuppy.shop.entity.Member;
-import com.fluffypuppy.shop.repository.MemberRepository;
+import com.fluffypuppy.shop.member.entity.Member;
+import com.fluffypuppy.shop.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

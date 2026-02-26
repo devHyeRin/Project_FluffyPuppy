@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.global.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

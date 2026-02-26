@@ -3,7 +3,9 @@ package com.fluffypuppy.shop.entity;
 import com.fluffypuppy.shop.constant.ItemCategory;
 import com.fluffypuppy.shop.constant.ItemSellStatus;
 import com.fluffypuppy.shop.dto.ItemFormDto;
-import com.fluffypuppy.shop.exception.OutOfStockException;
+import com.fluffypuppy.shop.global.entity.BaseEntity;
+import com.fluffypuppy.shop.global.exception.OutOfStockException;
+import com.fluffypuppy.shop.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class Item extends BaseEntity{
+public class Item extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

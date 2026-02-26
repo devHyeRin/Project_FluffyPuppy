@@ -1,5 +1,7 @@
 package com.fluffypuppy.shop.entity;
 
+import com.fluffypuppy.shop.global.entity.BaseEntity;
+import com.fluffypuppy.shop.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "cart")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Cart extends BaseEntity{
+public class Cart extends BaseEntity {
 
     @Id
     @Column(name = "cart_id")

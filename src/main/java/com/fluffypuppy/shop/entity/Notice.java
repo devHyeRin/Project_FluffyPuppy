@@ -1,6 +1,7 @@
 package com.fluffypuppy.shop.entity;
 
 import com.fluffypuppy.shop.dto.NoticeFormDto;
+import com.fluffypuppy.shop.global.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class Notice extends BaseEntity{
+public class Notice extends BaseEntity {
 
     @Id
     @Column(name="notice_id")

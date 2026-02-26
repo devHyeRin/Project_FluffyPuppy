@@ -1,5 +1,6 @@
 package com.fluffypuppy.shop.entity;
 
+import com.fluffypuppy.shop.global.entity.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 @Table(name="notice_img")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NoticeImg extends BaseEntity{
+public class NoticeImg extends BaseEntity {
 
     @Id
     @Column(name = "notice_img_id")

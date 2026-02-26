@@ -1,8 +1,9 @@
-package com.fluffypuppy.shop.entity;
+package com.fluffypuppy.shop.member.entity;
 
 import com.fluffypuppy.shop.constant.Provider;
 import com.fluffypuppy.shop.constant.Role;
-import com.fluffypuppy.shop.dto.MemberFormDto;
+import com.fluffypuppy.shop.member.dto.MemberFormDto;
+import com.fluffypuppy.shop.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

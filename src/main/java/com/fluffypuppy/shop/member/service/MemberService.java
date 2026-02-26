@@ -1,8 +1,8 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.member.service;
 
-import com.fluffypuppy.shop.dto.MemberFormDto;
-import com.fluffypuppy.shop.entity.Member;
-import com.fluffypuppy.shop.repository.MemberRepository;
+import com.fluffypuppy.shop.member.dto.MemberFormDto;
+import com.fluffypuppy.shop.member.entity.Member;
+import com.fluffypuppy.shop.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

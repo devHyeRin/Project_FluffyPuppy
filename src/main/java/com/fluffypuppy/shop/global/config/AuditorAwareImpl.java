@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.config;
+package com.fluffypuppy.shop.global.config;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

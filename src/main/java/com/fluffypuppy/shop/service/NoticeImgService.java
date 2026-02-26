@@ -1,6 +1,7 @@
 package com.fluffypuppy.shop.service;
 
 import com.fluffypuppy.shop.entity.NoticeImg;
+import com.fluffypuppy.shop.global.util.FileService;
 import com.fluffypuppy.shop.repository.NoticeImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

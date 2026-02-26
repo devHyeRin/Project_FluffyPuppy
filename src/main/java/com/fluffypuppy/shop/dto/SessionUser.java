@@ -1,6 +1,6 @@
 package com.fluffypuppy.shop.dto;
 
-import com.fluffypuppy.shop.entity.Member;
+import com.fluffypuppy.shop.member.entity.Member;
 import lombok.Getter;
 
 import java.io.Serializable;

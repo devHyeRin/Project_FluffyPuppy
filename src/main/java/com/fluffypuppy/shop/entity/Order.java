@@ -1,6 +1,8 @@
 package com.fluffypuppy.shop.entity;
 
 import com.fluffypuppy.shop.constant.OrderStatus;
+import com.fluffypuppy.shop.global.entity.BaseEntity;
+import com.fluffypuppy.shop.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,7 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order extends BaseEntity{
+public class Order extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")

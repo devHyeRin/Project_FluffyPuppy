@@ -1,6 +1,6 @@
-package com.fluffypuppy.shop.repository;
+package com.fluffypuppy.shop.member.repository;
 
-import com.fluffypuppy.shop.entity.Member;
+import com.fluffypuppy.shop.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

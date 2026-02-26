@@ -1,10 +1,10 @@
-package com.fluffypuppy.shop.controller;
+package com.fluffypuppy.shop.member.controller;
 
-import com.fluffypuppy.shop.dto.MemberFormDto;
-import com.fluffypuppy.shop.entity.Member;
+import com.fluffypuppy.shop.member.dto.MemberFormDto;
+import com.fluffypuppy.shop.member.entity.Member;
 import com.fluffypuppy.shop.service.MailService;
-import com.fluffypuppy.shop.service.MemberService;
-import com.fluffypuppy.shop.service.MemberUpdateService;
+import com.fluffypuppy.shop.member.service.MemberService;
+import com.fluffypuppy.shop.member.service.MemberUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

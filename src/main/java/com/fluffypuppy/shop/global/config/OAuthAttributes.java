@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.config;
+package com.fluffypuppy.shop.global.config;
 
 import com.fluffypuppy.shop.constant.Provider;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.exception;
+package com.fluffypuppy.shop.global.exception;
 
 public class OutOfStockException extends RuntimeException{
 

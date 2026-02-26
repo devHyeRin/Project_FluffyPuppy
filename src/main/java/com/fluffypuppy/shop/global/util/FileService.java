@@ -1,4 +1,4 @@
-package com.fluffypuppy.shop.service;
+package com.fluffypuppy.shop.global.util;
 
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
